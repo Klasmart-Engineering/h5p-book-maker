@@ -1,0 +1,83 @@
+@media print {
+  @page {
+    size: portrait;
+  }
+
+  /* Hide navigationbar - physical sheets does not support touch yet */
+  .h5p-content .h5p-actions,
+  /* Hide progressbar */
+  .h5p-book-maker .h5p-progressbar,
+  /* Hide footer */
+  .h5p-book-maker .h5p-footer,
+  /* Make a border on bottom */
+  .h5p-content {
+    border: none;
+    background: transparent;
+  }
+  .h5p-book-maker,
+  .h5p-book-maker .h5p-box-wrapper,
+  .h5p-book-maker .h5p-presentation-wrapper {
+    background: transparent;
+  }
+  /* Show scenes on print */
+  .h5p-book-maker .h5p-scenes-wrapper {
+    height: 100%;
+    background: transparent;
+  }
+  /* Scene setup - only scenes with doprint class is printed */
+  .h5p-book-maker .h5p-scenes-wrapper .h5p-scene {
+    display: none;
+  }
+  .h5p-book-maker .h5p-scenes-wrapper .h5p-scene.doprint {
+    display: block;
+    position: relative;
+    -webkit-transform: none;
+    transform: none;
+
+    /* Adding this border makes it work in FF 39 on Linux. I have no
+       Idea why, but please don't remove it !! */
+    border: 1px solid #ddd;
+    page-break-after: always;
+  }
+  .h5p-book-maker .h5p-scene .h5p-element {
+    overflow: visible;
+  }
+  .h5p-book-maker .h5p-scenes-wrapper .h5p-scene:last-child {
+    page-break-after: auto;
+  }
+  /******************************************/
+  /* Special handling of elements on scenes */
+  /******************************************/
+  /* Hiding buttons */
+  .h5p-book-maker .h5p-element-button-wrapper {
+    display: none;
+  }
+  /* Drag and drop question */
+  .h5p-book-maker .h5p-dragquestion > .h5p-inner {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Print dialog */
+.h5p-print-dialog {
+  text-align: center;
+}
+.h5p-print-dialog .h5p-inner {
+  display: inline-block;
+  text-align: left;
+}
+.h5p-print-dialog .h5p-joubelui-button {
+  display: block;
+  margin: 1em 0 0 0;
+}
+.h5p-print-dialog .h5p-joubelui-button::before {
+  font-family: 'H5PFontAwesome4';
+  margin-right: .5em;
+}
+.h5p-print-dialog .h5p-book-maker-print-all-scenes::before {
+  content: '\f0c5';
+}
+.h5p-print-dialog .h5p-book-maker-print-current-scene::before {
+  content: '\f016';
+}

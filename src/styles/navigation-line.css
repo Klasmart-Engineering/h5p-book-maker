@@ -1,0 +1,283 @@
+/* --------------------------------------- Footer -------------------------------- */
+
+/* Footer */
+.h5p-book-maker .h5p-footer {
+  bottom: 0;
+  display: flex;
+  font-size: 0.75em;
+  position: absolute;
+  width: 100%;
+  height: 6.5%;
+  line-height: 1.88em;
+
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
+  background-color: #fff;
+  z-index: 1;
+}
+
+/* Footer buttons */
+.h5p-book-maker .h5p-footer .h5p-footer-button {
+  display: inline-block;
+  background: transparent;
+  border: 0;
+  color: #555;
+  cursor: pointer;
+  height: 1.4em;
+  width: 1.4em;
+  line-height: 1.4em;
+  margin: 0.2em 0.4em;
+  text-align: center;
+
+
+  -webkit-transition: color 0.2s ease-in-out;
+  -moz-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Footer containers */
+.h5p-book-maker .h5p-footer .h5p-footer-left-adjusted {
+  flex: 2;
+  text-align: left;
+}
+
+.h5p-book-maker .h5p-footer .h5p-footer-right-adjusted {
+  flex: 2;
+  text-align: right;
+}
+
+.h5p-book-maker .h5p-footer .h5p-footer-center-adjusted {
+  flex: 1;
+  text-align: center;
+}
+
+/* ---------------------------- Footer scene information buttons ----------------------- */
+
+/* Prev scene */
+.h5p-book-maker .h5p-footer .h5p-footer-previous-scene:before {
+  font-family: 'H5PFontAwesome4';
+  content: "\f0d9";
+}
+
+/* Next scene */
+.h5p-book-maker .h5p-footer .h5p-footer-next-scene:after {
+  font-family: 'H5PFontAwesome4';
+  content: "\f0da";
+}
+
+/* Scene counter */
+.h5p-book-maker .h5p-footer .h5p-footer-scene-count,
+.h5p-book-maker .h5p-footer .h5p-footer-scene-count-current,
+.h5p-book-maker .h5p-footer .h5p-footer-scene-count-delimiter,
+.h5p-book-maker .h5p-footer .h5p-footer-scene-count-max {
+  display: inline-block;
+}
+
+/* Scene delimiter */
+.h5p-book-maker .h5p-footer .h5p-footer-scene-count-delimiter {
+  padding: 0 0.5em;
+}
+
+/* --------------------------------------------- Footer elements ---------------------------------------- */
+
+/* Print button and full screen button (in footer) */
+.h5p-book-maker .h5p-footer .h5p-footer-print:before,
+.h5p-book-maker .h5p-footer .h5p-footer-toggle-full-screen:before {
+  font-family: 'H5PFontAwesome4';
+  content: "\f065";
+  font-size: 1.2em;
+}
+.h5p-book-maker .h5p-footer .h5p-footer-print:before {
+  content: "\f02f";
+}
+.h5p-book-maker .h5p-footer .h5p-footer-toggle-full-screen:before {
+  content: "\f065";
+}
+
+/* Hide print button on small screens */
+@media screen and (max-device-width: 400px) {
+  .h5p-book-maker .h5p-footer .h5p-footer-print {
+    display: none;
+  }
+}
+/* Hide print button in fullscreen */
+.h5p-book-maker.h5p-fullscreen .h5p-footer .h5p-footer-print,
+.h5p-book-maker.h5p-semi-fullscreen .h5p-footer .h5p-footer-print {
+  display: none;
+}
+
+.h5p-book-maker.h5p-fullscreen .h5p-footer .h5p-footer-toggle-full-screen:before,
+.h5p-book-maker.h5p-semi-fullscreen .h5p-footer .h5p-footer-toggle-full-screen:before {
+  content: "\f066";
+}
+
+/* ------------------------------------------ Full Screen scaling ------------------------------------- */
+
+/* Solution mode text changes to footer elements */
+.h5p-book-maker .h5p-footer.footer-full-screen button.h5p-footer-button {
+  font-size: 1.0em;
+}
+
+/* ----------------------------------------- Progress bar --------------------------------------------- */
+
+.h5p-book-maker .h5p-book-maker-navigation {
+  bottom: 6.5%; /* Footer height */
+  height: 3.5%;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.h5p-book-maker .h5p-progressbar {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background: #999;
+
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
+  box-shadow: 0 0 0.5em 0 rgba(105, 105, 105, 0.4);
+}
+
+.h5p-book-maker .h5p-progressbar li {
+  flex: 1;
+  position: relative;
+}
+
+.h5p-book-maker .h5p-progressbar li:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.h5p-book-maker .h5p-progressbar a {
+  position: relative; /* needed for z-index */
+  z-index: 3;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding-top: 0.1em;
+}
+
+.h5p-book-maker .h5p-progressbar a:focus {
+  outline: 2px solid #79abfd;
+  outline-offset: 1px;
+}
+
+.h5p-book-maker .h5p-progressbar .h5p-progressbar-part-show {
+  background: #0097fd;
+  background-image: -webkit-linear-gradient(top, #0097fd, #096bcb);
+  background-image: -moz-linear-gradient(top, #0097fd, #096bcb);
+  background-image: linear-gradient(to bottom, #0097fd, #096bcb);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0097fd', endColorstr='#096bcb', GradientType=0);
+
+  -webkit-transition: width 0.25s ease-in-out;
+  -moz-transition: width 0.25s ease-in-out;
+  -ms-transition: width 0.25s ease-in-out;
+  transition: width 0.25s ease-in-out;
+}
+
+/* -------------------------------------- Feedback for progress bar ------------------------------------- */
+.h5p-book-maker .h5p-progressbar .h5p-progressbar-part .h5p-progressbar-part-has-task:after {
+  position: absolute;
+  bottom: 105%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 0.1em 0.3em;
+  line-height: 1em;
+  border: 0.1em solid;
+  cursor: auto;
+  font-family: 'H5PFontAwesome4';
+  font-size: 0.6em;
+}
+
+.h5p-book-maker .h5p-progressbar .h5p-progressbar-part .h5p-progressbar-part-has-task.h5p-is-correct:after {
+  content: "\f00c";
+  color: #6aa81b;
+  background-color: #d1e2ce;
+}
+
+.h5p-book-maker .h5p-progressbar .h5p-progressbar-part .h5p-progressbar-part-has-task.h5p-is-wrong:after {
+  content: "\f00d";
+  color: #c33f62;
+  background-color: #e6ced1;
+}
+
+/* --------------------------------------------------------- Progressbar with task ---------------------------- */
+.h5p-book-maker .h5p-progressbar .h5p-progressbar-part .h5p-progressbar-part-has-task {
+  display: block;
+  width: 0.45em;
+  height: 0.45em;
+
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+
+  border: 2px solid #D3D3D3;
+  cursor: pointer;
+
+  background: transparent;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.h5p-book-maker .h5p-progressbar .h5p-progressbar-part .h5p-progressbar-part-has-task.h5p-answered {
+  background: #D3D3D3;
+}
+
+.h5p-book-maker .h5p-progressbar .h5p-progressbar-part.h5p-progressbar-part-show .h5p-progressbar-part-has-task.h5p-answered {
+  background: #D3D3D3;
+}
+
+/* ----------------------------------------- Progressbar popup ------------------------------------ */
+.h5p-book-maker .h5p-progressbar-popup {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 3; /* Must be above feedback, which is 2 */
+
+  font-size: 0.75em;
+  line-height: 1.5em;
+
+  padding: 0 0.3em;
+  white-space: nowrap;
+
+  background: #000;
+  color: #FFF;
+
+  pointer-events: none;
+}
+
+.h5p-book-maker .h5p-progressbar-part:hover .h5p-progressbar-popup {
+  display: block;
+}
+
+/* -------------------------------------- Footer hover effects ---------------------------------- */
+
+.h5p-book-maker .h5p-footer .h5p-footer-button:hover {
+  color: #000;
+}
+
+.h5p-book-maker .h5p-footer .h5p-footer-button:focus {
+  outline: 2px solid #79abfd;
+  background-color: rgba(121, 171, 253, 0.2);
+}
+
+.h5p-book-maker .h5p-footer [aria-disabled="true"].h5p-footer-button {
+  visibility: hidden;
+}
+.h5p-book-maker .h5p-footer [aria-disabled="true"].h5p-footer-button:before,
+.h5p-book-maker .h5p-footer [aria-disabled="true"].h5p-footer-button:after {
+  color: #999;
+}

@@ -1,0 +1,346 @@
+[
+  {
+    "name": "book",
+    "type": "group",
+    "importance": "high",
+    "widget": "bookmaker",
+    "fields": [
+      {
+        "name": "scenes",
+        "importance": "high",
+        "type": "list",
+        "field": {
+          "name": "scene",
+          "importance": "high",
+          "type": "group",
+          "fields": [
+            {
+              "name": "elements",
+              "importance": "high",
+              "type": "list",
+              "field": {
+                "name": "element",
+                "importance": "high",
+                "type": "group",
+                "fields": [
+                  {
+                    "name": "x",
+                    "importance": "low",
+                    "type": "number",
+                    "widget": "none"
+                  },
+                  {
+                    "name": "y",
+                    "importance": "low",
+                    "type": "number",
+                    "widget": "none"
+                  },
+                  {
+                    "name": "width",
+                    "importance": "low",
+                    "type": "number",
+                    "widget": "none",
+                    "optional": true
+                  },
+                  {
+                    "name": "height",
+                    "importance": "low",
+                    "type": "number",
+                    "widget": "none",
+                    "optional": true
+                  },
+                  {
+                    "name": "action",
+                    "type": "library",
+                    "importance": "high",
+                    "options": [
+                      "H5P.AdvancedText 1.1",
+                      "H5P.Image 1.1",
+                      "H5P.Audio 1.4"
+                    ],
+                    "optional": true
+                  },
+                  {
+                    "name": "backgroundOpacity",
+                    "type": "number",
+                    "label": "Background Opacity",
+                    "importance": "low",
+                    "min": 0,
+                    "max": 100,
+                    "step": 5,
+                    "default": 0,
+                    "optional": true
+                  },
+                  {
+                    "name": "customImage",
+                    "type": "image",
+                    "label": "Custom image",
+                    "importance": "low",
+                    "optional": true
+                  },
+                  {
+                    "name": "canBeMovedByUser",
+                    "type": "boolean",
+                    "label": "Can be moved by user",
+                    "importance": "low",
+                    "default": false,
+                    "optional": true
+                  },
+                  {
+                    "name": "canBeChangedByUser",
+                    "type": "boolean",
+                    "label": "Can be changed by user",
+                    "importance": "low",
+                    "default": false,
+                    "optional": true
+                  },
+                  {
+                    "name": "title",
+                    "type": "text",
+                    "optional": true,
+                    "label": "Title",
+                    "importance": "medium"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "sceneBackgroundSelector",
+              "importance": "medium",
+              "type": "group",
+              "widget": "radioSelector",
+              "fields": [
+                {
+                  "name": "image",
+                  "type": "image",
+                  "label": "Image",
+                  "importance": "medium",
+                  "optional": true,
+                  "description": "Image background should have a 2:1 width to height ratio to avoid stretching. High resolution images will display better on larger screens."
+                },
+                {
+                  "name": "fill",
+                  "importance": "medium",
+                  "type": "text",
+                  "widget": "colorSelector",
+                  "label": "Pick a color",
+                  "spectrum": {
+                    "flat": true,
+                    "showInput": true,
+                    "allowEmpty": true,
+                    "showButtons": false
+                  },
+                  "default": null,
+                  "optional": true
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "globalBackgroundSelector",
+        "importance": "medium",
+        "type": "group",
+        "widget": "radioSelector",
+        "fields": [
+          {
+            "name": "imageGlobalBackground",
+            "type": "image",
+            "label": "Image",
+            "importance": "medium",
+            "optional": true,
+            "description": "Image background should have a 2:1 width to height ratio to avoid stretching. High resolution images will display better on larger screens."
+          },
+          {
+            "name": "fillGlobalBackground",
+            "type": "text",
+            "widget": "colorSelector",
+            "label": "Pick a color",
+            "importance": "medium",
+            "spectrum": {
+              "flat": true,
+              "showInput": true,
+              "allowEmpty": true,
+              "showButtons": false
+            },
+            "default": null,
+            "optional": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "l10n",
+    "type": "group",
+    "label": "Localize",
+    "importance": "low",
+    "common": true,
+    "fields": [
+      {
+        "name": "scene",
+        "type": "text",
+        "label": "Translation for \"Scene\"",
+        "importance": "low",
+        "default": "Scene"
+      },
+      {
+        "name": "score",
+        "type": "text",
+        "label": "Translation for \"Score\"",
+        "importance": "low",
+        "default": "Score"
+      },
+      {
+        "name": "total",
+        "type": "text",
+        "label": "Translation for \"Total\"",
+        "importance": "low",
+        "default": "Total"
+      },
+      {
+        "name": "retry",
+        "type": "text",
+        "label": "Text for the retry button",
+        "importance": "low",
+        "default": "Retry",
+        "optional": true
+      },
+      {
+        "name": "fullscreen",
+        "type": "text",
+        "label": "Fullscreen label",
+        "importance": "low",
+        "default": "Fullscreen"
+      },
+      {
+        "name": "exitFullscreen",
+        "type": "text",
+        "label": "Exit fullscreen label",
+        "importance": "low",
+        "default": "Exit fullscreen"
+      },
+      {
+        "name": "prevScene",
+        "type": "text",
+        "label": "Previous scene label",
+        "importance": "low",
+        "default": "Previous scene"
+      },
+      {
+        "name": "nextScene",
+        "type": "text",
+        "label": "Next scene label",
+        "importance": "low",
+        "default": "Next scene"
+      },
+      {
+        "name": "currentScene",
+        "type": "text",
+        "label": "Current scene label",
+        "importance": "low",
+        "default": "Current scene"
+      },
+      {
+        "name": "lastScene",
+        "type": "text",
+        "label": "Last scene label",
+        "importance": "low",
+        "default": "Last scene"
+      },
+      {
+        "name": "printTitle",
+        "type": "text",
+        "label": "Title for print button",
+        "importance": "low",
+        "default": "Print"
+      },
+      {
+        "name": "printIngress",
+        "type": "text",
+        "label": "Print dialog ingress",
+        "importance": "low",
+        "default": "How would you like to print this presentation?"
+      },
+      {
+        "name": "printAllScenes",
+        "type": "text",
+        "label": "Label for \"Print all scenes\" button",
+        "importance": "low",
+        "default": "Print all scenes"
+      },
+      {
+        "name": "printCurrentScene",
+        "type": "text",
+        "label": "Label for \"Print current scene\" button",
+        "importance": "low",
+        "default": "Print current scene"
+      },
+      {
+        "name": "noTitle",
+        "type": "text",
+        "label": "Label for scenes without a title",
+        "importance": "low",
+        "default": "No title"
+      },
+      {
+        "name": "accessibilitySceneNavigationExplanation",
+        "type": "text",
+        "label": "Explanation of scene navigation for assistive technologies",
+        "importance": "low",
+        "default": "Use left and right arrow to change scene in that direction whenever canvas is selected."
+      },
+      {
+        "name": "accessibilityCanvasLabel",
+        "type": "text",
+        "label": "Canvas label for assistive technologies",
+        "importance": "low",
+        "default": "Presentation canvas. Use left and right arrow to move between scenes."
+      },
+      {
+        "name": "sceneCount",
+        "type": "text",
+        "label": "Label for scene counter. Variables are @index, @total",
+        "importance": "low",
+        "default": "Scene @index of @total"
+      }
+    ]
+  },
+  {
+    "name": "override",
+    "type": "group",
+    "label": "Behaviour settings.",
+    "importance": "low",
+    "description": "These options will let you override behaviour settings.",
+    "optional": true,
+    "fields": [
+      {
+        "name": "retryButton",
+        "type": "select",
+        "label": "Override \"Retry\" button",
+        "importance": "low",
+        "description": "This option determines if the \"Retry\" button will be configured for each question individually (default) shown for all questions (Enabled) or disabled for all questions (Disabled)",
+        "optional": true,
+        "options": [
+          {
+            "value": "on",
+            "label": "Enabled"
+          },
+          {
+            "value": "off",
+            "label": "Disabled"
+          }
+        ]
+      },
+      {
+        "name": "enablePrintButton",
+        "type": "boolean",
+        "label": "Enable print button",
+        "importance": "low",
+        "description": "Enables the print button.",
+        "default": false
+      }
+    ]
+  }
+]
