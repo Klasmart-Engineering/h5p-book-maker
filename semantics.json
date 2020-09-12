@@ -72,9 +72,26 @@
                     "optional": true
                   },
                   {
-                    "name": "customImage",
+                    "name": "customImagePlay",
+                    "description": "Set a custom image for the audio button (play).",
                     "type": "image",
-                    "label": "Custom image",
+                    "label": "Custom image (play)",
+                    "importance": "low",
+                    "optional": true
+                  },
+                  {
+                    "name": "customImagePause",
+                    "description": "Set a custom image for the audio button (pause). This will only have an effect if a custom image for \"play\" is set.",
+                    "type": "image",
+                    "label": "Custom image (pause)",
+                    "importance": "low",
+                    "optional": true
+                  },
+                  {
+                    "name": "customImagePlayPaused",
+                    "description": "Set a custom image for the audio button (play when paused). This will only have an effect if a custom image for \"play\" is set.",
+                    "type": "image",
+                    "label": "Custom image (play when paused)",
                     "importance": "low",
                     "optional": true
                   },

@@ -781,3 +781,19 @@
   margin-left: 0.1em;
   vertical-align: middle;
 }
+
+.h5p-book-maker .h5p-book-maker-custom-audio-button {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+.h5p-book-maker .h5p-book-maker-custom-audio-button::before {
+  content: none;
+}
+
+.h5p-book-maker .h5p-book-maker-custom-audio-button-image {
+  height: 100%;
+  width: 100%;
+}

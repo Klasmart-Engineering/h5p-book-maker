@@ -518,6 +518,40 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
     this.editor.processElement(element, $elementContainer, index, instance);
   }
 
+  // Add custom images to audio button
+  if (element.action && element.action.library && element.action.library.split(' ')[0] === 'H5P.Audio') {
+    const audioButton = $innerElementContainer.get(0).querySelector('button');
+    if (audioButton) {
+      if (element.customImagePlay && element.customImagePlay.path) {
+        audioButton.classList.add('h5p-book-maker-custom-audio-button');
+
+        const customImage = document.createElement('img');
+        customImage.classList.add('h5p-book-maker-custom-audio-button-image');
+        H5P.setSource(customImage, element.customImagePlay, this.contentId);
+        audioButton.appendChild(customImage);
+
+        // Audio has ended
+        instance.audio.addEventListener('ended', () => {
+          H5P.setSource(customImage, element.customImagePlay, this.contentId);
+        });
+
+        // Audio was paused
+        if (element.customImagePlayPaused && element.customImagePlayPaused.path) {
+          instance.audio.addEventListener('pause', () => {
+            H5P.setSource(customImage, element.customImagePlayPaused, this.contentId);
+          });
+        }
+
+        // Audio was continued
+        if (element.customImagePause && element.customImagePause.path) {
+          instance.audio.addEventListener('play', () => {
+            H5P.setSource(customImage, element.customImagePause, this.contentId);
+          });
+        }
+      }
+    }
+  }
+
   return $elementContainer;
 };
 
