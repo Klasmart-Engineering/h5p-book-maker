@@ -2,7 +2,7 @@ import Parent from 'h5p-parent';
 import NavigationLine from './navigation-line';
 import SceneBackground from './scene-backgrounds';
 import { jQuery as $ } from './globals';
-import { addClickAndKeyboardListeners, isFunction, kebabCase, keyCode } from './utils';
+import { addClickAndKeyboardListeners, isFunction, kebabCase, keyCode, isAncestor, isDraggable } from './utils';
 import Scene from './scene.js';
 
 /**
@@ -552,7 +552,85 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
     }
   }
 
+  // Check if element is allowed to be moved
+  if (!this.editor && element.action && element.action.library && element.action.library.split(' ')[0] === 'H5P.Image') {
+    if (element.canBeMovedByUser) {
+      const dragItem = $elementContainer.get(0);
+      dragItem.classList.add('h5p-book-maker-draggable-element');
+      this.addElementMoveListeners(dragItem);
+    }
+  }
+
   return $elementContainer;
+};
+
+/**
+ * Add move listeners to DOM element of instance.
+ * @param {HTMLElement} dragItem Item to be dragged.
+ */
+BookMaker.prototype.addElementMoveListeners = function (dragItem) {
+  const container = dragItem.parentNode;
+
+  let active = false;
+  let currentX;
+  let currentY;
+  let initialX;
+  let initialY;
+  let xOffset = 0;
+  let yOffset = 0;
+
+  // Handle element move start
+  const handleElementMoveStart = (event) => {
+    if (event.type === 'touchstart') {
+      initialX = event.touches[0].clientX - xOffset;
+      initialY = event.touches[0].clientY - yOffset;
+    }
+    else {
+      initialX = event.clientX - xOffset;
+      initialY = event.clientY - yOffset;
+    }
+
+    if (isAncestor(event.target, dragItem)) {
+      active = true;
+    }
+  };
+
+  // Handle element move
+  const handleElementMove = (event) => {
+    if (active) {
+      event.preventDefault();
+
+      if (event.type === 'touchmove') {
+        currentX = event.touches[0].clientX - initialX;
+        currentY = event.touches[0].clientY - initialY;
+      }
+      else {
+        currentX = event.clientX - initialX;
+        currentY = event.clientY - initialY;
+      }
+
+      xOffset = currentX;
+      yOffset = currentY;
+
+      dragItem.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+    }
+  };
+
+  // Handle element move end
+  const handleElementMoveEnd = () => {
+    initialX = currentX;
+    initialY = currentY;
+
+    active = false;
+  };
+
+  container.addEventListener('touchstart', handleElementMoveStart, false);
+  container.addEventListener('touchmove', handleElementMove, false);
+  container.addEventListener('touchend', handleElementMoveEnd, false);
+
+  container.addEventListener('mousedown', handleElementMoveStart, false);
+  container.addEventListener('mousemove', handleElementMove, false);
+  container.addEventListener('mouseup', handleElementMoveEnd, false);
 };
 
 /**
@@ -994,6 +1072,10 @@ BookMaker.prototype.initTouchEvents = function () {
   var reset = transform('');
 
   this.$scenesWrapper.bind('touchstart', function (event) {
+    if (isDraggable(event.target)) {
+      return; // moving element, not scene
+    }
+
     isTouchJump = false;
     // Set start positions
     lastX = startX = event.originalEvent.touches[0].pageX;
@@ -1008,6 +1090,10 @@ BookMaker.prototype.initTouchEvents = function () {
     touchStarted = true;
 
   }).bind('touchmove', function (event) {
+    if (isDraggable(event.target)) {
+      return; // moving element, not scene
+    }
+
     var touches = event.originalEvent.touches;
 
     if (touchStarted) {

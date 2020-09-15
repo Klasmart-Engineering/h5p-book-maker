@@ -106,3 +106,42 @@ const $STRIP_HTML_HELPER = $('<div>');
  * @return {string}
  */
 export const stripHTML = str => $STRIP_HTML_HELPER.html(str).text().trim();
+
+/**
+ * Check whether an ancestor is in fact an ancestor of a descendant.
+ * @param {HTMLElement} descendant Node to check for ancestor.
+ * @param {HTMLElement} ancestor Node to check for.
+ * @return {boolean} True, if node itself is the ancestor or ancestor is.
+ */
+export const isAncestor = (descendant, ancestor) => {
+  if (!descendant || !ancestor) {
+    return false;
+  }
+
+  if (descendant === ancestor || descendant.parentNode === ancestor) {
+    return true;
+  }
+
+  if (!descendant.parentNode) {
+    return false;
+  }
+
+  return isAncestor(descendant.parentNode, ancestor);
+};
+
+/**
+ * Check whether a node is (inside) a draggable element.
+ * @param {HTMLElement} node Node to check.
+ * @return {boolean} True, if node is (inside) a draggable element.
+ */
+export const isDraggable = (node) => {
+  if (!node || !node.classList) {
+    return false;
+  }
+
+  if (node.classList.contains('h5p-book-maker-draggable-element')) {
+    return true;
+  }
+
+  return (node.parentNode) ? isDraggable(node.parentNode) : false;
+};
