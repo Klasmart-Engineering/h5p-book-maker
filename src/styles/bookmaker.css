@@ -276,7 +276,7 @@
 }
 
 .h5p-popup-overlay.h5p-popup-comment-field .h5p-popup-container,
-.h5p-popup-overlay.h5p-advancedtext .h5p-popup-container {
+.h5p-popup-overlay.h5p-textinputview .h5p-popup-container {
   width: initial;
   min-height: initial;
   min-width: 22%;
@@ -304,17 +304,17 @@
   background: #ddd;
 }
 
-.h5p-book-maker .h5p-popup-overlay.h5p-advancedtext {
+.h5p-book-maker .h5p-popup-overlay.h5p-textinputview {
   font-size: 1em;
   margin-right: 1.5em;
   padding: 0.5em;
 }
 
-.h5p-book-maker .h5p-popup-overlay.h5p-advanced-text .h5p-popup-container {
+.h5p-book-maker .h5p-popup-overlay.h5p-text-input-view .h5p-popup-container {
   padding: 2em 0;
 }
 
-.h5p-book-maker .h5p-popup-overlay.h5p-advancedtext .h5p-popup-container .h5p-popup-wrapper,
+.h5p-book-maker .h5p-popup-overlay.h5p-textinputview .h5p-popup-container .h5p-popup-wrapper,
 .h5p-book-maker .h5p-popup-overlay.h5p-link .h5p-popup-container .h5p-popup-wrapper,
 .h5p-book-maker .h5p-popup-overlay.h5p-popup-comment-field .h5p-popup-container .h5p-popup-wrapper {
   padding: 0.5em;
@@ -446,7 +446,7 @@
   font-family: 'H5PBookMaker';
 }
 
-.h5p-book-maker .h5p-advancedtext-button:before {
+.h5p-book-maker .h5p-textinputview-button:before {
   content: "\f05a";
 }
 
@@ -578,12 +578,12 @@
   overflow-y: auto;
 }
 
-.h5p-book-maker .h5p-element .h5p-element-outer.h5p-advancedtext-outer-element,
+.h5p-book-maker .h5p-element .h5p-element-outer.h5p-textinputview-outer-element,
 .h5p-book-maker .h5p-element .h5p-element-outer.h5p-audio-outer-element {
   overflow-y: hidden;
 }
 
-.h5p-book-maker .h5p-element .h5p-element-inner:not(.h5p-link):not(.h5p-advanced-text) {
+.h5p-book-maker .h5p-element .h5p-element-inner:not(.h5p-link):not(.h5p-text-input-view) {
   position: absolute;
   top: 0;
   left: 0;
@@ -605,7 +605,7 @@
   overflow-y: hidden;
 }
 
-.h5p-book-maker .h5p-element .h5p-element-inner.h5p-advanced-text {
+.h5p-book-maker .h5p-element .h5p-element-inner.h5p-text-input-view {
   outline: none;
   padding: 0.375em 0.5em;
 }
@@ -617,7 +617,7 @@
   padding: 0.375em 0.5em;
 }
 
-.h5p-book-maker .h5p-element.h5p-transparent .h5p-element-inner.h5p-advanced-text,
+.h5p-book-maker .h5p-element.h5p-transparent .h5p-element-inner.h5p-text-input-view,
 .h5p-book-maker .h5p-element.h5p-transparent .h5p-element-inner.h5p-link {
   padding: 0;
 }
@@ -626,7 +626,7 @@
   padding: 0;
 }
 
-.h5p-book-maker .h5p-advanced-text p span {
+.h5p-book-maker .h5p-text-input-view p span {
   line-height: 1.25em;
 }
 

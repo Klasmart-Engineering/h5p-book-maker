@@ -739,7 +739,7 @@ BookMaker.prototype.createInteractionButton = function (element, instance) {
   const $buttonElement = $('<div class="h5p-button-element"></div>');
   instance.attach($buttonElement);
 
-  const parentPosition = libTypePmz === 'h5p-advancedtext' ? {
+  const parentPosition = libTypePmz === 'h5p-textinputview' ? {
     x: element.x,
     y: element.y
   } : null;
