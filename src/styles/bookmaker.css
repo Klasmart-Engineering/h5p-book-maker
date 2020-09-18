@@ -799,9 +799,14 @@
 }
 
 .h5p-book-maker .h5p-book-maker-draggable-element {
+  cursor: grab;
   z-index: 2;
 }
 
 .h5p-book-maker .h5p-book-maker-draggable-element-top {
   z-index: 3;
+}
+
+.h5p-book-maker .h5p-book-maker-draggable-element-grabbing {
+  cursor: grabbing;
 }

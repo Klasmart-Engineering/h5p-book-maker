@@ -598,6 +598,7 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem) {
         draggables[i].classList.remove('h5p-book-maker-draggable-element-top');
       }
       ancestor.classList.add('h5p-book-maker-draggable-element-top');
+      ancestor.classList.add('h5p-book-maker-draggable-element-grabbing');
 
       active = true;
     }
@@ -625,9 +626,14 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem) {
   };
 
   // Handle element move end
-  const handleElementMoveEnd = () => {
+  const handleElementMoveEnd = (event) => {
     initialX = currentX;
     initialY = currentY;
+
+    const ancestor = checkAncestor(event.target, dragItem);
+    if (ancestor) {
+      ancestor.classList.remove('h5p-book-maker-draggable-element-grabbing');
+    }
 
     active = false;
   };
