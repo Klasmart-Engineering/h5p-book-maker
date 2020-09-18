@@ -593,6 +593,7 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
   if (!this.editor && element.action && element.action.library && element.action.library.split(' ')[0] === 'H5P.AdvancedText') {
     if (element.canBeChangedByUser) {
       const textInputElement = $elementContainer.get(0);
+      textInputElement.classList.add('h5p-book-maker-no-overflow');
       textInputElement.setAttribute('contenteditable', 'true');
       textInputElement.setAttribute('role', 'input');
 
