@@ -797,3 +797,11 @@
   height: 100%;
   width: 100%;
 }
+
+.h5p-book-maker .h5p-book-maker-draggable-element {
+  z-index: 2;
+}
+
+.h5p-book-maker .h5p-book-maker-draggable-element-top {
+  z-index: 3;
+}

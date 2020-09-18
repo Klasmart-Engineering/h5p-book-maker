@@ -111,22 +111,22 @@ export const stripHTML = str => $STRIP_HTML_HELPER.html(str).text().trim();
  * Check whether an ancestor is in fact an ancestor of a descendant.
  * @param {HTMLElement} descendant Node to check for ancestor.
  * @param {HTMLElement} ancestor Node to check for.
- * @return {boolean} True, if node itself is the ancestor or ancestor is.
+ * @return {null|HTMLElement} Ancestor element if it is ancestor.
  */
-export const isAncestor = (descendant, ancestor) => {
+export const checkAncestor = (descendant, ancestor) => {
   if (!descendant || !ancestor) {
-    return false;
+    return null;
   }
 
   if (descendant === ancestor || descendant.parentNode === ancestor) {
-    return true;
+    return ancestor;
   }
 
   if (!descendant.parentNode) {
-    return false;
+    return null;
   }
 
-  return isAncestor(descendant.parentNode, ancestor);
+  return checkAncestor(descendant.parentNode, ancestor);
 };
 
 /**

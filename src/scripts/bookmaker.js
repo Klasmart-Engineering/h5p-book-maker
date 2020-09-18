@@ -2,7 +2,7 @@ import Parent from 'h5p-parent';
 import NavigationLine from './navigation-line';
 import SceneBackground from './scene-backgrounds';
 import { jQuery as $ } from './globals';
-import { addClickAndKeyboardListeners, isFunction, kebabCase, keyCode, isAncestor, isDraggable } from './utils';
+import { addClickAndKeyboardListeners, isFunction, kebabCase, keyCode, checkAncestor, isDraggable } from './utils';
 import Scene from './scene.js';
 
 /**
@@ -590,7 +590,15 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem) {
       initialY = event.clientY - yOffset;
     }
 
-    if (isAncestor(event.target, dragItem)) {
+    const ancestor = checkAncestor(event.target, dragItem);
+    if (ancestor) {
+      // Move selected draggable element to top
+      const draggables = document.querySelector('.h5p-scene.h5p-current').querySelectorAll('.h5p-book-maker-draggable-element');
+      for (let i = 0; i < draggables.length; i++) {
+        draggables[i].classList.remove('h5p-book-maker-draggable-element-top');
+      }
+      ancestor.classList.add('h5p-book-maker-draggable-element-top');
+
       active = true;
     }
   };
