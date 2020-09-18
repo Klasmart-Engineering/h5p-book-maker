@@ -138,7 +138,8 @@ BookMaker.prototype.attach = function ($container) {
     const isFocusableElement = that.belongsToTagName(
       event.target, ['input', 'textarea', 'a', 'button'], event.currentTarget);
     // Does the target element have a tabIndex set?
-    const hasTabIndex = (event.target.tabIndex !== -1);
+    const hasTabIndex = that.belongsToTabIndexed(event.target);
+
     // The dialog container (if within a dialog)
     const $dialogParent = $target.closest('.h5p-popup-container');
     // Is target within a dialog
@@ -253,6 +254,33 @@ BookMaker.prototype.belongsToTagName = function (node, tagNames, stop) {
   }
 
   return this.belongsToTagName(node.parentNode, tagNames, stop);
+};
+
+/**
+ * Check if a node or one of its parents has a non-negative tabIndex
+ *
+ * @param {HTMLElement} node Node to check.
+ * @param {HTMLElement} [stop] Optional node to stop. Defaults to body node.
+ * @return {boolean} True, if node belongs to a node with tabIndex > -1.
+ */
+BookMaker.prototype.belongsToTabIndexed = function (node, stop) {
+  if (!node) {
+    return false;
+  }
+
+  // Stop check at DOM tree root
+  stop = stop || document.body;
+
+  if (node.tabIndex !== -1) {
+    return true;
+  }
+
+  // Having stop can prevent always parsing DOM tree to root
+  if (stop === node) {
+    return false;
+  }
+
+  return this.belongsToTabIndexed(node.parentNode, stop);
 };
 
 /**
@@ -558,6 +586,23 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
       const dragItem = $elementContainer.get(0);
       dragItem.classList.add('h5p-book-maker-draggable-element');
       this.addElementMoveListeners(dragItem);
+    }
+  }
+
+  // Check if text is allowed to be changed
+  if (!this.editor && element.action && element.action.library && element.action.library.split(' ')[0] === 'H5P.AdvancedText') {
+    if (element.canBeChangedByUser) {
+      const textInputElement = $elementContainer.get(0);
+      textInputElement.setAttribute('contenteditable', 'true');
+      textInputElement.setAttribute('role', 'input');
+
+      textInputElement.addEventListener('click', (event) => {
+        const foo = document.querySelector('.h5p-content');
+        if (foo) {
+          foo.classList.remove('using-mouse');
+        }
+        event.currentTarget.focus();
+      });
     }
   }
 
