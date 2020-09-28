@@ -69,13 +69,6 @@ function Element(parameters) {
   }
 
   // Assumes that all audio recorder elements are at the end - they should :-)
-  if (library.library.split(' ')[0] === 'H5P.Image' && !parameters.canBeMovedByUser) {
-    setTimeout(() => {
-      self.instance.$img.get(0).setAttribute('draggable', false);
-    }, 0);
-  }
-
-  // Assumes that all audio recorder elements are at the end - they should :-)
   if (library.library.split(' ')[0] === 'H5P.Audio' && parameters.canBeChangedByUser) {
     self.parent.parent.audioReferences.push({
       instance: self.instance,

@@ -656,6 +656,10 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
       dragItem.classList.add('h5p-book-maker-draggable-element');
       this.addElementMoveListeners(dragItem);
     }
+    else {
+      const image = $elementContainer.get(0).querySelector('img');
+      image.setAttribute('draggable', false);
+    }
   }
 
   // Check if text is allowed to be changed
