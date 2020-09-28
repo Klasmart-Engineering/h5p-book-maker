@@ -840,7 +840,7 @@
   overflow-y: hidden;
 }
 
-.h5p-book-maker .h5p-audio-recorder-view .recording-indicator-wrapper {
+.h5p-book-maker .h5p-audio-recorder-book-maker-view .recording-indicator-wrapper {
   display: none;
 }
 
