@@ -623,6 +623,7 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
 
         const customImage = document.createElement('img');
         customImage.classList.add('h5p-book-maker-custom-audio-button-image');
+        customImage.setAttribute('draggable', false);
         H5P.setSource(customImage, element.customImagePlay, this.contentId);
         audioButton.appendChild(customImage);
 
