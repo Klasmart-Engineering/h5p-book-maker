@@ -51,9 +51,9 @@ let BookMaker = function (params, id, extras) {
           x: element.x + element.width - 5 / 2,
           y: element.y - 8.88887 / 2,
           action: {
-            library: "H5P.AudioRecorder 1.0", // TODO: Get version number from somewhere?
+            library: "H5P.AudioRecorderBookMaker 1.0", // TODO: Get version number from somewhere?
             metadata: {
-              contentType: 'AudioRecorder', license: 'U', title: 'Untitled Audio Recorder'
+              contentType: 'AudioRecorderBookMaker', license: 'U', title: 'Untitled Audio Recorder'
             },
             params: {
               l10n: {

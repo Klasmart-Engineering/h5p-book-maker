@@ -76,7 +76,7 @@ function Element(parameters) {
     });
   }
 
-  if (library.library.split(' ')[0] === 'H5P.AudioRecorder') {
+  if (library.library.split(' ')[0] === 'H5P.AudioRecorderBookMaker') {
     const audioReference = self.parent.parent.audioReferences.shift();
     self.instance.bookmakerReferenceId = audioReference.id;
 

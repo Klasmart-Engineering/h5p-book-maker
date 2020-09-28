@@ -422,7 +422,7 @@
   border-color: #e489f3; /* Used by focus effect */
 }
 
-.h5p-book-maker .h5p-audiorecorder-button {
+.h5p-book-maker .h5p-audiorecorderbookmaker-button {
   background: #981d99;
   border-color: #e489f3; /* Used by focus effect */
   font-size: 1.5em;
@@ -444,7 +444,7 @@
   background: #661366;
 }
 
-.h5p-book-maker .h5p-audiorecorder-button:hover {
+.h5p-book-maker .h5p-audiorecorderbookmaker-button:hover {
   background: #661366;
 }
 
@@ -492,7 +492,7 @@
   content: "\e994";
 }
 
-.h5p-book-maker .h5p-audiorecorder-button:before {
+.h5p-book-maker .h5p-audiorecorderbookmaker-button:before {
   content: "\f130";
   line-height: 1.75em;
 }
