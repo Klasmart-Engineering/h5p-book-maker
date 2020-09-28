@@ -623,6 +623,7 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
 
         const customImage = document.createElement('img');
         customImage.classList.add('h5p-book-maker-custom-audio-button-image');
+        customImage.classList.add('h5p-book-maker-selection-not-allowed');
         customImage.setAttribute('draggable', false);
         H5P.setSource(customImage, element.customImagePlay, this.contentId);
         audioButton.appendChild(customImage);
@@ -651,14 +652,18 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
 
   // Check if element is allowed to be moved
   if (!this.editor && element.action && element.action.library && element.action.library.split(' ')[0] === 'H5P.Image') {
+    const elementContainer = $elementContainer.get(0);
+    elementContainer.classList.add('h5p-book-maker-selection-not-allowed');
+
     if (element.canBeMovedByUser) {
-      const dragItem = $elementContainer.get(0);
-      dragItem.classList.add('h5p-book-maker-draggable-element');
-      this.addElementMoveListeners(dragItem);
+      elementContainer.classList.add('h5p-book-maker-draggable-element');
+      this.addElementMoveListeners(elementContainer);
     }
     else {
-      const image = $elementContainer.get(0).querySelector('img');
-      image.setAttribute('draggable', false);
+      const image = elementContainer.querySelector('img');
+      if (image) {
+        image.setAttribute('draggable', false);
+      }
     }
   }
 
