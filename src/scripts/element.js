@@ -67,6 +67,31 @@ function Element(parameters) {
   else {
     self.parent.parent.elementInstances[self.parent.index].push(self.instance);
   }
+
+  // Assumes that all audio recorder elements are at the end - they should :-)
+  if (library.library.split(' ')[0] === 'H5P.Audio' && parameters.canBeChangedByUser) {
+    self.parent.parent.audioReferences.push({
+      instance: self.instance,
+      id: self.parent.parent.audioReferences.length + 1
+    });
+  }
+
+  if (library.library.split(' ')[0] === 'H5P.AudioRecorder') {
+    const audioReference = self.parent.parent.audioReferences.shift();
+    self.instance.bookmakerReferenceId = audioReference.id;
+
+    self.instance.on('recordingdone', event => {
+      if (event.data.id !== audioReference.id) {
+        return; // Intended for other audio
+      }
+
+      audioReference.instance.audio.src = event.data.url;
+      audioReference.instance.audio.load();
+
+      // Close popup
+      document.querySelector('.h5p-close-popup').click();
+    });
+  }
 }
 
 export default Element;

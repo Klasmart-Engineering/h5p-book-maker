@@ -28,6 +28,65 @@ let BookMaker = function (params, id, extras) {
     this.editor = extras.bookMakerEditor;
   }
 
+  this.audioReferences = [];
+
+  if (!this.editor) {
+    params.book.scenes.forEach(scene => {
+      scene.elements.forEach(element => {
+        const libraryName = (element.action && element.action.library) ? element.action.library.split(' ')[0] : null;
+        if (!libraryName || libraryName !== 'H5P.Audio') {
+          return;
+        }
+
+        if (!element.canBeChangedByUser) {
+          return; // This Audio cannot be changed
+        }
+
+        // Inject AudioRecorder for Audio
+        const recorderElement = {
+          backgroundOpacity: 0,
+          displayAsButton: true,
+          height: 8.88887, // TODO: Find better size/height/position
+          width: 5,
+          x: element.x + element.width - 5 / 2,
+          y: element.y - 8.88887 / 2,
+          action: {
+            library: "H5P.AudioRecorder 1.0", // TODO: Get version number from somewhere?
+            metadata: {
+              contentType: 'AudioRecorder', license: 'U', title: 'Untitled Audio Recorder'
+            },
+            params: {
+              l10n: {
+                recordAnswer: 'Record',
+                pause: 'Pause',
+                continue: 'Continue',
+                download: 'Use',
+                done: 'Done',
+                retry: 'Retry',
+                microphoneNotSupported: 'Microphone not supported. Make sure you are using a browser that allows microphone recording.',
+                microphoneInaccessible: 'Microphone is not accessible. Make sure that the browser microphone is enabled.',
+                insecureNotAllowed: 'Access to microphone is not allowed in your browser since this page is not served using HTTPS. Please contact the author, and ask him to make this available using HTTPS',
+                statusReadyToRecord: 'Press a button below to record your answer.',
+                statusRecording: 'Recording...',
+                statusPaused: 'Recording paused. Press a button to continue recording.',
+                statusFinishedRecording: 'You have successfully recorded your answer! Listen to the recording below.',
+                downloadRecording: 'Download this recording or retry.',
+                retryDialogHeaderText: 'Retry recording?',
+                retryDialogBodyText: 'By pressing "Retry" you will lose your current recording.',
+                retryDialogConfirmText: 'Retry',
+                retryDialogCancelText: 'Cancel',
+                statusCantCreateTheAudioFile: 'Can\'t create the audio file.'
+              }
+            },
+            subContentId: H5P.createUUID()
+          }
+        };
+
+        scene.elements = scene.elements.concat(recorderElement);
+      });
+    });
+  }
+
   if (extras) {
     this.previousState = extras.previousState;
   }
@@ -503,7 +562,10 @@ BookMaker.prototype.attachElements = function ($scene, index) {
  * @returns {jQuery}
  */
 BookMaker.prototype.attachElement = function (element, instance, $scene, index) {
-  var classes = 'h5p-element';
+  const displayAsButton = (element.displayAsButton !== undefined && element.displayAsButton);
+
+  // Only using the button style from Course Presentation for Audio Recorder
+  var classes = 'h5p-element' + (displayAsButton ? ' h5p-element-button-wrapper h5p-element-button-big' : '');
   var $elementContainer = H5P.jQuery('<div>', {
     'class': classes,
   }).css({
@@ -516,30 +578,36 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
   const isTransparent = element.backgroundOpacity === undefined || element.backgroundOpacity === 0;
   $elementContainer.toggleClass('h5p-transparent', isTransparent);
 
-  const hasLibrary = element.action && element.action.library;
-  const libTypePmz = hasLibrary ? this.getLibraryTypePmz(element.action.library) : 'other';
+  if (displayAsButton) {
+    const $button = this.createInteractionButton(element, instance);
+    $button.appendTo($elementContainer);
+  }
+  else {
+    const hasLibrary = element.action && element.action.library;
+    const libTypePmz = hasLibrary ? this.getLibraryTypePmz(element.action.library) : 'other';
 
-  var $outerElementContainer = H5P.jQuery('<div>', {
-    'class': `h5p-element-outer ${libTypePmz}-outer-element`
-  }).css({
-    background: 'rgba(255,255,255,' + (element.backgroundOpacity === undefined ? 0 : element.backgroundOpacity / 100) + ')'
-  }).appendTo($elementContainer);
+    var $outerElementContainer = H5P.jQuery('<div>', {
+      'class': `h5p-element-outer ${libTypePmz}-outer-element`
+    }).css({
+      background: 'rgba(255,255,255,' + (element.backgroundOpacity === undefined ? 0 : element.backgroundOpacity / 100) + ')'
+    }).appendTo($elementContainer);
 
-  var $innerElementContainer = H5P.jQuery('<div>', {
-    'class': 'h5p-element-inner'
-  }).appendTo($outerElementContainer);
+    var $innerElementContainer = H5P.jQuery('<div>', {
+      'class': 'h5p-element-inner'
+    }).appendTo($outerElementContainer);
 
-  // H5P.Shape sets it's own size when line in selected
-  instance.on('set-size', function (event) {
-    for (let property in event.data) {
-      $elementContainer.get(0).style[property] = event.data[property];
-    }
-  });
+    // H5P.Shape sets it's own size when line in selected
+    instance.on('set-size', function (event) {
+      for (let property in event.data) {
+        $elementContainer.get(0).style[property] = event.data[property];
+      }
+    });
 
-  instance.attach($innerElementContainer);
+    instance.attach($innerElementContainer);
 
-  // For first scene
-  this.setOverflowTabIndex();
+    // For first scene
+    this.setOverflowTabIndex();
+  }
 
   if (this.editor !== undefined) {
     // If we're in the H5P editor, allow it to manipulate the elementInstances

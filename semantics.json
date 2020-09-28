@@ -112,6 +112,14 @@
                     "optional": true
                   },
                   {
+                    "name": "displayAsButton",
+                    "type": "boolean",
+                    "label": "Display as button",
+                    "importance": "medium",
+                    "default": false,
+                    "optional": true
+                  },
+                  {
                     "name": "title",
                     "type": "text",
                     "optional": true,

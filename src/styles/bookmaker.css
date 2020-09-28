@@ -214,16 +214,16 @@
 .h5p-book-maker .h5p-element.h5p-element-button-wrapper {
   border: 0;
   background-color: transparent !important;
-  width: 1.5em !important;
-  height: 1.5em !important;
+  /* width: 1.5em !important;
+  height: 1.5em !important; */
   overflow: visible !important;
   z-index: 2;
 }
 
 .h5p-book-maker .h5p-element.h5p-element-button-wrapper.h5p-element-button-big {
-  width: 2.334em !important;
+  /* width: 2.334em !important;
   height: 2.334em !important;
-  line-height: 2.334em !important;
+  line-height: 2.334em !important; */
 }
 
 .h5p-book-maker .h5p-element.h5p-blanks,
@@ -397,7 +397,7 @@
   text-decoration: none;
   font-family: 'H5PFontAwesome4';
   content: "\f119";
-  font-size: 0.875em;
+  /* font-size: 0.875em; */
 }
 
 .h5p-book-maker .h5p-element-button.h5p-element-button-big {
@@ -422,6 +422,15 @@
   border-color: #e489f3; /* Used by focus effect */
 }
 
+.h5p-book-maker .h5p-audiorecorder-button {
+  background: #981d99;
+  border-color: #e489f3; /* Used by focus effect */
+  font-size: 1.5em;
+  height: 100%;
+  line-height: 1.4;
+  width: 100%;
+}
+
 .h5p-book-maker .h5p-exportabletextarea-button:hover,
 .h5p-book-maker .h5p-blanks-button:hover,
 .h5p-book-maker .h5p-multichoice-button:hover,
@@ -434,6 +443,11 @@
 .h5p-book-maker .h5p-truefalse-button:hover {
   background: #661366;
 }
+
+.h5p-book-maker .h5p-audiorecorder-button:hover {
+  background: #661366;
+}
+
 
 .h5p-book-maker .h5p-exportabletextarea-button:before,
 .h5p-book-maker .h5p-blanks-button:before,
@@ -476,6 +490,11 @@
 
 .h5p-book-maker .h5p-blanks-button:before {
   content: "\e994";
+}
+
+.h5p-book-maker .h5p-audiorecorder-button:before {
+  content: "\f130";
+  line-height: 1.75em;
 }
 
 .h5p-book-maker .h5p-multichoice-button:before {
@@ -819,4 +838,8 @@
   overflow: hidden;
   overflow-x: hidden;
   overflow-y: hidden;
+}
+
+.h5p-book-maker .h5p-audio-recorder-view .recording-indicator-wrapper {
+  display: none;
 }
