@@ -125,6 +125,30 @@
                     "optional": true,
                     "label": "Title",
                     "importance": "medium"
+                  },
+                  {
+                    "name": "audio",
+                    "type": "group",
+                    "label": "Audio",
+                    "importance": "low",
+                    "description": "Audio samples",
+                    "optional": true,
+                    "fields": [
+                      {
+                        "name": "pickedUp",
+                        "type": "audio",
+                        "label": "Pick up",
+                        "description": "Audio to play when image is picked up.",
+                        "importance": "low"
+                      },
+                      {
+                        "name": "dropped",
+                        "type": "audio",
+                        "label": "Dropped",
+                        "description": "Audio to generally play when image is dropped.",
+                        "importance": "low"
+                      }
+                    ]
                   }
                 ]
               }

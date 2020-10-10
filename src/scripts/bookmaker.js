@@ -117,6 +117,8 @@ let BookMaker = function (params, id, extras) {
     this.enablePrintButton = !!params.override.enablePrintButton;
   }
 
+  this.players = [];
+
   // Set override for all actions
   this.setElementsOverride(params.override);
 
@@ -657,7 +659,7 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
 
     if (element.canBeMovedByUser) {
       elementContainer.classList.add('h5p-book-maker-draggable-element');
-      this.addElementMoveListeners(elementContainer);
+      this.addElementMoveListeners(elementContainer, element.audio);
     }
     else {
       const image = elementContainer.querySelector('img');
@@ -691,9 +693,13 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
 /**
  * Add move listeners to DOM element of instance.
  * @param {HTMLElement} dragItem Item to be dragged.
+ * @param {object} [audios={}] Audios.
+ * @param {object[]} [audios.pickedUp] Audio to play when picked up.
+ * @param {object[]} [audios.droped] Audio to play when dropped.
  */
-BookMaker.prototype.addElementMoveListeners = function (dragItem) {
+BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
   const container = dragItem.parentNode;
+  const players = {};
 
   let active = false;
   let currentX;
@@ -702,6 +708,28 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem) {
   let initialY;
   let xOffset = 0;
   let yOffset = 0;
+
+  ['pickedUp', 'dropped'].forEach(type => {
+    if (
+      !audios[type] ||
+      !Array.isArray(audios[type]) ||
+      audios[type].length < 1 ||
+      !audios[type][0].path ||
+      audios[type][0].mime.split('/')[0] !== 'audio'
+    ) {
+      return;
+    }
+
+    // Attach audio elements
+    const player = document.createElement('audio');
+    player.classList.add('h5p-dragquestion-no-display');
+    player.src = H5P.getPath(audios[type][0].path, this.contentId);
+    container.appendChild(player);
+
+    // Track audio elements
+    this.players.push(player);
+    players[type] = player;
+  });
 
   // Handle element move start
   const handleElementMoveStart = (event) => {
@@ -725,6 +753,11 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem) {
       ancestor.classList.add('h5p-book-maker-draggable-element-grabbing');
 
       active = true;
+
+      if (players.pickedUp) {
+        this.resetAudios();
+        this.playAudio(players.pickedUp);
+      }
     }
   };
 
@@ -757,6 +790,11 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem) {
     const ancestor = checkAncestor(event.target, dragItem);
     if (ancestor) {
       ancestor.classList.remove('h5p-book-maker-draggable-element-grabbing');
+
+      if (players.dropped) {
+        this.resetAudios();
+        this.playAudio(players.dropped);
+      }
     }
 
     active = false;
@@ -1695,6 +1733,32 @@ BookMaker.prototype.getXAPIData = function () {
   return {
     statement: xAPIEvent.data.statement
   };
+};
+
+/**
+ * Play audio sample.
+ * @param {HTMLElement} audioElement Audio element to be played.
+ */
+BookMaker.prototype.playAudio = function (audioElement) {
+  if (!this.$container.closest('.h5p-content').hasClass('using-mouse')) {
+    return; // Don't disturb ARIA
+  }
+
+  if (!audioElement) {
+    return;
+  }
+
+  audioElement.play();
+};
+
+/**
+ * Reset audios.
+ */
+BookMaker.prototype.resetAudios = function () {
+  this.players.forEach(player => {
+    player.pause();
+    player.load();
+  });
 };
 
 export default BookMaker;
