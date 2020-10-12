@@ -137,7 +137,7 @@
                       {
                         "name": "pickedUp",
                         "type": "audio",
-                        "label": "Pick up",
+                        "label": "Picked up",
                         "description": "Audio to play when image is picked up.",
                         "importance": "low"
                       },
@@ -145,7 +145,7 @@
                         "name": "dropped",
                         "type": "audio",
                         "label": "Dropped",
-                        "description": "Audio to generally play when image is dropped.",
+                        "description": "Audio to play when image is dropped.",
                         "importance": "low"
                       }
                     ]
