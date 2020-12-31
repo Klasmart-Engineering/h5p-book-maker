@@ -852,3 +852,61 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
+
+.h5p-book-maker .h5p-book-maker-fullscreen-button-wrapper {
+  background-color: rgba(76,68,82,0.8);
+  border: 0;
+  border-radius: 0 0 0 100%;
+  height: 1.8em;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1.8em;
+  z-index: 3;
+}
+
+.h5p-book-maker .h5p-book-maker-fullscreen-button {
+  background: url('../images/button-fullscreen-enter-icon.svg');
+  background-color: rgba(0,0,0,0);
+  background-position: .5em .4em;
+  background-repeat: no-repeat;
+  background-size: 1em 1em;
+  border: 0;
+  border-radius: 0 0 0 100%;
+  font-size: 1em;
+  height: 1.8em;
+  position: absolute;
+  width: 1.8em;
+}
+
+.h5p-book-maker.h5p-fullscreen .h5p-book-maker-fullscreen-button {
+  background: url('../images/button-fullscreen-exit-icon.svg');
+  background-color: rgba(0,0,0,0);
+  background-position: .5em .4em;
+  background-repeat: no-repeat;
+  background-size: 1em 1em;
+}
+
+.h5p-book-maker .h5p-book-maker-fullscreen-button:hover {
+  cursor: pointer;
+}
+
+.h5p-book-maker .h5p-book-maker-paper {
+  background: url('../images/paper-corner.svg');
+  background-color: rgba(0,0,0,0);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 2em;
+  height: 2em;
+  bottom: 0;
+  position: absolute;
+}
+
+.h5p-book-maker .h5p-book-maker-paper.h5p-book-maker-left {
+  left: 0;
+}
+
+.h5p-book-maker .h5p-book-maker-paper.h5p-book-maker-right {
+  right: 0;
+  transform: rotateY(180deg);
+}

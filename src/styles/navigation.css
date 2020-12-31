@@ -1,0 +1,43 @@
+.h5p-book-maker .h5p-book-maker-navigation-bar {
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  text-align: right;
+  width: 7.5%;
+  z-index: 1;
+}
+
+.h5p-book-maker .h5p-book-maker-navigation-bar.h5p-book-maker-navigation-bar-visible {
+  display: block;
+}
+
+.h5p-book-maker .h5p-book-maker-navigation-bar.h5p-book-maker-navigation-bar-left {
+  left: 0;
+}
+
+.h5p-book-maker .h5p-book-maker-navigation-bar.h5p-book-maker-navigation-bar-right {
+  left: 92.5%;
+}
+
+.h5p-book-maker .h5p-book-maker-navigation-bar-background {
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s;
+  width: 100%;
+}
+
+.h5p-book-maker .h5p-book-maker-navigation-bar.h5p-book-maker-navigation-bar-left .h5p-book-maker-navigation-bar-background {
+  background: linear-gradient(90deg, rgba(1,1,1,0.3), rgba(1,1,1,0));
+}
+
+.h5p-book-maker .h5p-book-maker-navigation-bar.h5p-book-maker-navigation-bar-right .h5p-book-maker-navigation-bar-background {
+  background: linear-gradient(90deg, rgba(1, 1, 1, 0), rgba(1, 1, 1, 0.3));
+}
+
+.h5p-book-maker .h5p-book-maker-navigation-bar:hover .h5p-book-maker-navigation-bar-background {
+  opacity: 1;
+}

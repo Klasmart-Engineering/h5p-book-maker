@@ -20,6 +20,23 @@ function Scene(parameters) {
     if (!$wrapper) {
       $wrapper = H5P.jQuery(Scene.createHTML(parameters));
     }
+
+    if (!self.parent.isEditor()) {
+      if (self.index > 0) {
+        const cornerLeft = document.createElement('div');
+        cornerLeft.classList.add('h5p-book-maker-paper');
+        cornerLeft.classList.add('h5p-book-maker-left');
+        $wrapper.append(cornerLeft);
+      }
+
+      if (self.index < self.parent.getChildren().length - 1) {
+        const cornerRight = document.createElement('div');
+        cornerRight.classList.add('h5p-book-maker-paper');
+        cornerRight.classList.add('h5p-book-maker-right');
+        $wrapper.append(cornerRight);
+      }
+    }
+
     return $wrapper;
   };
 

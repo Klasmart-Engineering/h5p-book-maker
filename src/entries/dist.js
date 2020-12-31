@@ -1,4 +1,5 @@
 import "../styles/bookmaker.css";
+import "../styles/navigation.css";
 import "../styles/navigation-line.css";
 import "../styles/scene-background.css";
 import "../styles/print.css";

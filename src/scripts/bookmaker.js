@@ -1,5 +1,6 @@
 import Parent from 'h5p-parent';
 import NavigationLine from './navigation-line';
+import NavigationBar from './navigation-bar';
 import SceneBackground from './scene-backgrounds';
 import { jQuery as $ } from './globals';
 import { addClickAndKeyboardListeners, isFunction, kebabCase, keyCode, checkAncestor, isDraggable } from './utils';
@@ -32,6 +33,10 @@ let BookMaker = function (params, id, extras) {
 
   if (!this.editor) {
     params.book.scenes.forEach(scene => {
+      if (!scene.elements) {
+        return;
+      }
+
       scene.elements.forEach(element => {
         const libraryName = (element.action && element.action.library) ? element.action.library.split(' ')[0] : null;
         if (!libraryName || libraryName !== 'H5P.Audio') {
@@ -277,6 +282,14 @@ BookMaker.prototype.attach = function ($container) {
     this.setSceneNumberAnnouncer(0, false);
   }
 
+  if (!this.isEditor()) {
+    this.createNavigationBars();
+    this.createFullScreenButton();
+
+    this.$wrapper.find('.h5p-book-maker-navigation').hide();
+    this.$footer.hide();
+  }
+
   new SceneBackground(this);
 
   if (this.previousState && this.previousState.progress) {
@@ -365,6 +378,89 @@ BookMaker.prototype.createSceneTitle = function () {
  */
 BookMaker.prototype.isEditor = function () {
   return this.editor !== undefined;
+};
+
+/**
+ * Create navigation bars.
+ */
+BookMaker.prototype.createNavigationBars = function () {
+  // Left navigation bar
+  this.navigationLeft = new NavigationBar({
+    label: this.l10n.prevScene,
+    position: 'left',
+    prefix: 'h5p-book-maker'
+  }, {
+    onClick: () => {
+      if (this.currentSceneIndex === 0) {
+        return;
+      }
+      this.previousScene();
+    }
+  });
+  this.$wrapper.append(this.navigationLeft.getDOM());
+
+  // Right navigation bar
+  this.navigationRight = new NavigationBar({
+    label: this.l10n.nextScene,
+    position: 'right',
+    prefix: 'h5p-book-maker'
+  }, {
+    onClick: () => {
+      if (this.currentSceneIndex + 1 >= this.children.length) {
+        return;
+      }
+
+      this.nextScene();
+    }
+  });
+  this.navigationRight.show();
+  this.$wrapper.append(this.navigationRight.getDOM());
+};
+
+/**
+ * Create fullscreen button.
+ */
+BookMaker.prototype.createFullScreenButton = function () {
+  if (H5P.fullscreenSupported !== true) {
+    return;
+  }
+
+  const container = document.querySelector('.h5p-container');
+
+  const toggleFullScreen = (event) => {
+    if (event && event.type === 'keypress' && event.keyCode !== 13 && event.keyCode !== 32) {
+      return;
+    }
+    else {
+      event.preventDefault();
+    }
+
+    if (H5P.isFullscreen === true) {
+      H5P.exitFullScreen();
+    }
+    else {
+      H5P.fullScreen(H5P.jQuery(container), this);
+    }
+  };
+
+  this.fullScreenButton = document.createElement('button');
+  this.fullScreenButton.classList.add('h5p-book-maker-fullscreen-button');
+  this.fullScreenButton.setAttribute('aria-label', this.l10n.fullscreen);
+  this.fullScreenButton.addEventListener('click', toggleFullScreen);
+
+  this.on('enterFullScreen', () => {
+    this.fullScreenButton.setAttribute('aria-label', this.l10n.exitFullscreen);
+  });
+
+  this.on('exitFullScreen', () => {
+    this.fullScreenButton.setAttribute('aria-label', this.l10n.fullscreen);
+  });
+
+  const fullScreenButtonWrapper = document.createElement('div');
+  fullScreenButtonWrapper.classList.add('h5p-book-maker-fullscreen-button-wrapper');
+  fullScreenButtonWrapper.appendChild(this.fullScreenButton);
+
+  container.insertBefore(fullScreenButtonWrapper, container.firstChild);
 };
 
 /**
@@ -738,6 +834,12 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
 
   // Handle element move start
   const handleElementMoveStart = (event) => {
+    // Hide navigation bars
+    if (!this.isEditor()) {
+      this.navigationLeft.hide();
+      this.navigationRight.hide();
+    }
+
     if (event.type === 'touchstart') {
       initialX = event.touches[0].clientX - xOffset;
       initialY = event.touches[0].clientY - yOffset;
@@ -789,6 +891,16 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
 
   // Handle element move end
   const handleElementMoveEnd = (event) => {
+    // Show navigation bars
+    if (!this.isEditor()) {
+      if (this.currentSceneIndex > 0) {
+        this.navigationLeft.show();
+      }
+      if (this.currentSceneIndex < this.children.length - 1) {
+        this.navigationRight.show();
+      }
+    }
+
     initialX = currentX;
     initialY = currentY;
 
@@ -1253,6 +1365,12 @@ BookMaker.prototype.initTouchEvents = function () {
   var reset = transform('');
 
   this.$scenesWrapper.bind('touchstart', function (event) {
+    // Hide navigation bars when on touch
+    if (!this.isEditor()) {
+      this.navigationLeft.hide();
+      this.navigationRight.hide();
+    }
+
     if (isDraggable(event.target)) {
       return; // moving element, not scene
     }
@@ -1461,6 +1579,22 @@ BookMaker.prototype.jumpToScene = function (sceneNumber, noScroll, handleFocus =
   this.$current = $scenes.eq(sceneNumber).addClass('h5p-animate');
   var previousSceneIndex = this.currentSceneIndex;
   this.currentSceneIndex = sceneNumber;
+
+  // Update navigation bars
+  if (!this.isEditor()) {
+    if (sceneNumber === 0) {
+      this.navigationLeft.hide();
+      this.navigationRight.show();
+    }
+    else if (sceneNumber === $scenes.length - 1) {
+      this.navigationLeft.show();
+      this.navigationRight.hide();
+    }
+    else {
+      this.navigationLeft.show();
+      this.navigationRight.show();
+    }
+  }
 
   // Attach elements for this scene
   this.attachElements(this.$current, sceneNumber);
@@ -1738,6 +1872,14 @@ BookMaker.prototype.getXAPIData = function () {
   return {
     statement: xAPIEvent.data.statement
   };
+};
+
+/**
+ * Get scenes.
+ * @return {Scene[]} Scenes.
+ */
+BookMaker.prototype.getChildren = function () {
+  return this.children;
 };
 
 /**

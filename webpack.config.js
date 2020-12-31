@@ -40,6 +40,11 @@ var config = {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         include: path.join(__dirname, 'src/fonts'),
         loader: 'file-loader?name=fonts/[name].[ext]'
+      },
+      {
+        test: /\.svg|\.jpg|\.png$/,
+        include: path.join(__dirname, 'src/images'),
+        loader: 'file-loader?name=images/[name].[ext]'
       }
     ]
   },
