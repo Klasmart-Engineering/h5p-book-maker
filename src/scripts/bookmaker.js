@@ -86,6 +86,11 @@ let BookMaker = function (params, id, extras) {
       });
     });
   }
+  else {
+    this.editor.on('removeScene', event => {
+      this.$scenesWrapper.children().eq(event.data).remove();
+    });
+  }
 
   if (extras) {
     this.previousState = extras.previousState;
