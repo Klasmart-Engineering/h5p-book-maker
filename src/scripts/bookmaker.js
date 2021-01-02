@@ -1366,9 +1366,9 @@ BookMaker.prototype.initTouchEvents = function () {
 
   this.$scenesWrapper.bind('touchstart', function (event) {
     // Hide navigation bars when on touch
-    if (!this.isEditor()) {
-      this.navigationLeft.hide();
-      this.navigationRight.hide();
+    if (!that.isEditor()) {
+      that.navigationLeft.hide();
+      that.navigationRight.hide();
     }
 
     if (isDraggable(event.target)) {
