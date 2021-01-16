@@ -892,10 +892,6 @@
 }
 
 .h5p-book-maker .h5p-book-maker-paper {
-  background: url('../images/paper-corner.svg');
-  background-color: rgba(0,0,0,0);
-  background-repeat: no-repeat;
-  background-size: cover;
   width: 2em;
   height: 2em;
   bottom: 0;
@@ -903,10 +899,17 @@
 }
 
 .h5p-book-maker .h5p-book-maker-paper.h5p-book-maker-left {
+  background: url('../images/paper-corner-left.svg');
+  background-color: rgba(0,0,0,0);
+  background-repeat: no-repeat;
+  background-size: cover;
   left: 0;
 }
 
 .h5p-book-maker .h5p-book-maker-paper.h5p-book-maker-right {
+  background: url('../images/paper-corner-right.svg');
+  background-color: rgba(0,0,0,0);
+  background-repeat: no-repeat;
+  background-size: cover;
   right: 0;
-  transform: rotateY(180deg);
 }

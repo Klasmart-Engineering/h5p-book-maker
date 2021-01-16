@@ -149,6 +149,85 @@
                         "importance": "low"
                       }
                     ]
+                  },
+                  {
+                    "name": "attentionSeeker",
+                    "type": "group",
+                    "label": "Attention seeker",
+                    "importance": "low",
+                    "optional": true,
+                    "fields": [
+                      {
+                        "name": "style",
+                        "type": "select",
+                        "label": "Style of the attention seeker",
+                        "importance": "low",
+                        "description": "Set the visual style of the attention seeker.",
+                        "optional": true,
+                        "options": [
+                          {
+                            "value": "bounce",
+                            "label": "Bounce"
+                          },
+                          {
+                            "value": "flash",
+                            "label": "Flash"
+                          },
+                          {
+                            "value": "focus",
+                            "label": "Focus"
+                          },
+                          {
+                            "value": "heartbeat",
+                            "label": "Heart beat"
+                          },
+                          {
+                            "value": "highlight",
+                            "label": "Highlight"
+                          },
+                          {
+                            "value": "pulse",
+                            "label": "Pulse"
+                          },
+                          {
+                            "value": "rubberband",
+                            "label": "Rubber band"
+                          },
+                          {
+                            "value": "shakex",
+                            "label": "Shake X"
+                          },
+                          {
+                            "value": "tada",
+                            "label": "Tada"
+                          },
+                          {
+                            "value": "wobble",
+                            "label": "Wobble"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "interval",
+                        "type": "number",
+                        "label": "Time interval",
+                        "description": "Set how many seconds time interval between triggering the attention should be.",
+                        "importance": "low",
+                        "optional": true,
+                        "default": 10,
+                        "min": 1
+                      },
+                      {
+                        "name": "repeat",
+                        "type": "number",
+                        "label": "Repeat",
+                        "description": "Set how often the attention seeker should trigger in the intervals. Keep empty for running infinitely",
+                        "importance": "low",
+                        "optional": true,
+                        "default": 1,
+                        "min": 1
+                      }
+                    ]
                   }
                 ]
               }
@@ -389,6 +468,85 @@
         "importance": "low",
         "description": "Enables the print button.",
         "default": false
+      },
+      {
+        "name": "attentionSeekerCorner",
+        "type": "group",
+        "label": "Attention seeker for dog ears",
+        "importance": "low",
+        "optional": true,
+        "fields": [
+          {
+            "name": "style",
+            "type": "select",
+            "label": "Style of the attention seeker",
+            "importance": "low",
+            "description": "Set the visual style of the attention seeker.",
+            "optional": true,
+            "options": [
+              {
+                "value": "bounce",
+                "label": "Bounce"
+              },
+              {
+                "value": "flash",
+                "label": "Flash"
+              },
+              {
+                "value": "focus",
+                "label": "Focus"
+              },
+              {
+                "value": "heartbeat",
+                "label": "Heart beat"
+              },
+              {
+                "value": "highlight",
+                "label": "Highlight"
+              },
+              {
+                "value": "pulse",
+                "label": "Pulse"
+              },
+              {
+                "value": "rubberband",
+                "label": "Rubber band"
+              },
+              {
+                "value": "shakex",
+                "label": "Shake X"
+              },
+              {
+                "value": "tada",
+                "label": "Tada"
+              },
+              {
+                "value": "wobble",
+                "label": "Wobble"
+              }
+            ]
+          },
+          {
+            "name": "interval",
+            "type": "number",
+            "label": "Time interval",
+            "description": "Set how many seconds time interval between triggering the attention should be.",
+            "importance": "low",
+            "optional": true,
+            "default": 10,
+            "min": 1
+          },
+          {
+            "name": "repeat",
+            "type": "number",
+            "label": "Repeat",
+            "description": "Set how often the attention seeker should trigger in the intervals. Keep empty for running infinitely.",
+            "importance": "low",
+            "optional": true,
+            "default": 1,
+            "min": 1
+          }
+        ]
       }
     ]
   }

@@ -6,6 +6,21 @@ import Parent from 'h5p-parent';
  */
 function Scene(parameters) {
   const self = this;
+
+  // Set attentionSeeker parameters for corners
+  self.paperCorners = {
+    left: {
+      element: {
+        attentionSeeker: Object.assign({}, parameters.attentionSeeker)
+      }
+    },
+    right: {
+      element: {
+        attentionSeeker: Object.assign({}, parameters.attentionSeeker)
+      }
+    }
+  };
+
   Parent.call(self, Element, parameters.elements);
 
   // The scene DOM element when attached
@@ -23,21 +38,42 @@ function Scene(parameters) {
 
     if (!self.parent.isEditor()) {
       if (self.index > 0) {
-        const cornerLeft = document.createElement('div');
-        cornerLeft.classList.add('h5p-book-maker-paper');
-        cornerLeft.classList.add('h5p-book-maker-left');
-        $wrapper.append(cornerLeft);
+        self.paperCorners.left.dom = document.createElement('div');
+        self.paperCorners.left.dom.classList.add('h5p-book-maker-paper');
+        self.paperCorners.left.dom.classList.add('h5p-book-maker-left');
+        $wrapper.append(self.paperCorners.left.dom);
       }
 
       if (self.index < self.parent.getChildren().length - 1) {
-        const cornerRight = document.createElement('div');
-        cornerRight.classList.add('h5p-book-maker-paper');
-        cornerRight.classList.add('h5p-book-maker-right');
-        $wrapper.append(cornerRight);
+        self.paperCorners.right.dom = document.createElement('div');
+        self.paperCorners.right.dom.classList.add('h5p-book-maker-paper');
+        self.paperCorners.right.dom.classList.add('h5p-book-maker-right');
+        $wrapper.append(self.paperCorners.right.dom);
       }
     }
 
     return $wrapper;
+  };
+
+  /**
+   * Get paper corner.
+   * @param {string} position Position [left|right].
+   * @return {object} Corner.
+   */
+  self.getCorner = function (position) {
+    if (position !== 'left' && position !== 'right') {
+      return;
+    }
+
+    return self.paperCorners[position];
+  };
+
+  /**
+   * Get paper corners.
+   * @return {object} Corners.
+   */
+  self.getCorners = function () {
+    return self.paperCorners;
   };
 
   /**

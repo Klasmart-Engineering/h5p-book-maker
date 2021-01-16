@@ -25,6 +25,9 @@ let BookMaker = function (params, id, extras) {
   this.hasAnswerElements = false;
   this.ignoreResize = false;
 
+  // Attention seeker manager for elements
+  this.attentionSeeker = new H5P.AttentionSeeker();
+
   if (extras.bookMakerEditor) {
     this.editor = extras.bookMakerEditor;
   }
@@ -131,6 +134,10 @@ let BookMaker = function (params, id, extras) {
 
   // Set override for all actions
   this.setElementsOverride(params.override);
+
+  params.book.scenes.forEach(sceneParams => {
+    sceneParams.attentionSeeker = params.override.attentionSeekerCorner;
+  });
 
   // Inheritance
   Parent.call(this, Scene, params.book.scenes);
@@ -271,6 +278,8 @@ BookMaker.prototype.attach = function ($container) {
   // We have always attached all elements in current scene
   this.elementsAttached[this.currentSceneIndex] = true;
 
+  this.runAttentionSeekers(this.getCurrentSceneIndex());
+
   // Initialize touch events
   this.initTouchEvents();
 
@@ -394,6 +403,13 @@ BookMaker.prototype.createNavigationBars = function () {
       if (this.currentSceneIndex === 0) {
         return;
       }
+
+      // Click on corner
+      const cornerRight = this.children[this.getCurrentSceneIndex()].getCorner('left').dom;
+      if (cornerRight) {
+        cornerRight.click();
+      }
+
       this.previousScene();
     }
   });
@@ -408,6 +424,12 @@ BookMaker.prototype.createNavigationBars = function () {
     onClick: () => {
       if (this.currentSceneIndex + 1 >= this.children.length) {
         return;
+      }
+
+      // Click on corner
+      const cornerRight = this.children[this.getCurrentSceneIndex()].getCorner('right').dom;
+      if (cornerRight) {
+        cornerRight.click();
       }
 
       this.nextScene();
@@ -532,7 +554,7 @@ BookMaker.prototype.resize = function () {
     }
   }
 
-  // TODO: Add support for -16 when content conversion script is created?
+  // TODO: Add support for -16 when contenat conversion script is created?
   var widthRatio = width / this.width;
   style.height = (width / this.ratio) + 'px';
   style.fontSize = (this.fontSize * widthRatio) + 'px';
@@ -653,6 +675,138 @@ BookMaker.prototype.attachElements = function ($scene, index) {
   }, {'bubbles': true, 'external': true});
 
   this.elementsAttached[index] = true;
+};
+
+/**
+ * Add attention seeker to element.
+ * @param {HTMLElement} elementContainer Element container to add attention seeker to.
+ * @param {object} element Element with params that keeps track of attentionSeeker.
+ */
+BookMaker.prototype.addAttentionSeeker = function (elementContainer, element) {
+  if (!element.attentionSeeker.style || element.attentionSeeker.style === 'none') {
+    return; // Cannot add attention seeker
+  }
+
+  element.attentionSeeker.workerId = this.attentionSeeker.register({
+    element: elementContainer,
+    style: element.attentionSeeker.style,
+    interval: (element.attentionSeeker.interval || 10) * 1000,
+    repeat: element.attentionSeeker.repeat || Infinity,
+  });
+
+  // Function to unregister a worker
+  const unregisterWorker = () => {
+    this.attentionSeeker.unregister(element.attentionSeeker.workerId);
+  };
+
+  // Remove attention seeker once element is interacted with
+  elementContainer.addEventListener('click', unregisterWorker);
+  elementContainer.addEventListener('touchstart', unregisterWorker);
+
+  // Block attention seeker from working.
+  this.attentionSeeker.on('removed', event => {
+    if (event.data === element.attentionSeeker.workerId) {
+      element.attentionSeeker.workerId = BookMaker.ATTENTION_SEEKER_DONE;
+
+      elementContainer.removeEventListener('click', unregisterWorker);
+      elementContainer.removeEventListener('touch', unregisterWorker);
+    }
+  });
+};
+
+/**
+ * Add attention seeker.
+ * @param {HTMLElement} elementContainer Element container to attach to.
+ * @param {object} element Element with parameters. // TODO call with parameters instead?
+ */
+BookMaker.prototype.runAttentionSeeker = function (elementContainer, element) {
+  if (!element.attentionSeeker) {
+    return;
+  }
+
+  // Already has an attention seeker
+  if (typeof element.attentionSeeker.workerId === 'number') {
+    if (element.attentionSeeker.workerId < 0) {
+      return; // Marked as done
+    }
+
+    // Re-run
+    this.attentionSeeker.run(element.attentionSeeker.workerId);
+    return;
+  }
+
+  if (!element.attentionSeeker.style || element.attentionSeeker.style === 'none') {
+    return; // No style set
+  }
+
+  // Add and run attention seeker
+  this.addAttentionSeeker(elementContainer, element);
+  this.attentionSeeker.run(element.attentionSeeker.workerId);
+};
+
+/**
+ * Add attention seekers to scene.
+ * @param {number} sceneNumber number of scene to add to.
+ */
+BookMaker.prototype.runAttentionSeekers = function (sceneNumber) {
+  if (this.isEditor()) {
+    return; // No seekers in editor
+  }
+
+  if (sceneNumber !== this.getCurrentSceneIndex()) {
+    return; // Scene currently not visible
+  }
+
+  // Attention seekers for elements
+  this.$current[0].querySelectorAll('.h5p-element').forEach((elementContainer, index) => {
+    this.runAttentionSeeker(elementContainer, this.scenes[sceneNumber].elements[index]);
+  });
+
+  // Attention seekers for corners
+  for (let position in this.children[sceneNumber].getCorners()) {
+    const corners = this.children[sceneNumber].getCorners();
+
+    if (corners[position].dom) {
+      this.runAttentionSeeker(corners[position].dom, corners[position].element);
+    }
+  }
+};
+
+/**
+ * Pause attention seeker.
+ * @param {object} element Element to pause attentionSeeker for.
+ */
+BookMaker.prototype.pauseAttentionSeeker = function (element) {
+  if (!element || !element.attentionSeeker) {
+    return; // no attention seeker
+  }
+
+  if (typeof element.attentionSeeker.workerId !== 'number' || element.attentionSeeker.workerId < 0) {
+    return; // no worker runnable.
+  }
+
+  this.attentionSeeker.pause(element.attentionSeeker.workerId);
+};
+
+/**
+ * Pause attention seekers to scene.
+ * @param {number} sceneNumber number of scene to add to.
+ */
+BookMaker.prototype.pauseAttentionSeekers = function (sceneNumber) {
+  if (this.isEditor()) {
+    return; // Editor
+  }
+
+  // Attention seekers for elements
+  this.scenes[sceneNumber].elements.forEach(element => {
+    this.pauseAttentionSeeker(element);
+  });
+
+  for (let position in this.children[sceneNumber].getCorners()) {
+    const corners = this.children[sceneNumber].getCorners();
+
+    this.pauseAttentionSeeker(corners[position].element);
+  }
 };
 
 /**
@@ -834,6 +988,14 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
 
   // Handle element move start
   const handleElementMoveStart = (event) => {
+    currentX = 0;
+    currentY = 0;
+
+    const ancestor = checkAncestor(event.target, dragItem);
+    if (!ancestor) {
+      return;
+    }
+
     // Hide navigation bars
     if (!this.isEditor()) {
       this.navigationLeft.hide();
@@ -849,22 +1011,19 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
       initialY = event.clientY - yOffset;
     }
 
-    const ancestor = checkAncestor(event.target, dragItem);
-    if (ancestor) {
-      // Move selected draggable element to top
-      const draggables = document.querySelector('.h5p-scene.h5p-current').querySelectorAll('.h5p-book-maker-draggable-element');
-      for (let i = 0; i < draggables.length; i++) {
-        draggables[i].classList.remove('h5p-book-maker-draggable-element-top');
-      }
-      ancestor.classList.add('h5p-book-maker-draggable-element-top');
-      ancestor.classList.add('h5p-book-maker-draggable-element-grabbing');
+    // Move selected draggable element to top
+    const draggables = document.querySelector('.h5p-scene.h5p-current').querySelectorAll('.h5p-book-maker-draggable-element');
+    for (let i = 0; i < draggables.length; i++) {
+      draggables[i].classList.remove('h5p-book-maker-draggable-element-top');
+    }
+    ancestor.classList.add('h5p-book-maker-draggable-element-top');
+    ancestor.classList.add('h5p-book-maker-draggable-element-grabbing');
 
-      active = true;
+    active = true;
 
-      if (players.pickedUp) {
-        this.resetAudios();
-        this.playAudio(players.pickedUp);
-      }
+    if (players.pickedUp) {
+      this.resetAudios();
+      this.playAudio(players.pickedUp);
     }
   };
 
@@ -873,6 +1032,7 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
     if (active) {
       event.preventDefault();
 
+      // Get position
       if (event.type === 'touchmove') {
         currentX = event.touches[0].clientX - initialX;
         currentY = event.touches[0].clientY - initialY;
@@ -891,6 +1051,10 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
 
   // Handle element move end
   const handleElementMoveEnd = (event) => {
+    if (!active) {
+      return;
+    }
+
     // Show navigation bars
     if (!this.isEditor()) {
       if (this.currentSceneIndex > 0) {
@@ -912,6 +1076,19 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
         this.resetAudios();
         this.playAudio(players.dropped);
       }
+    }
+
+    if (currentX !== 0 && currentY !== 0) {
+      const dragItemStyle = window.getComputedStyle(dragItem);
+      const currentLeft = parseInt(dragItemStyle.getPropertyValue('left'));
+      const currentTop = parseInt(dragItemStyle.getPropertyValue('top'));
+
+      dragItem.style.left = `${currentLeft + currentX}px`;
+      dragItem.style.top = `${currentTop + currentY}px`;
+      dragItem.style.transform = '';
+
+      xOffset = 0;
+      yOffset = 0;
     }
 
     active = false;
@@ -1596,8 +1773,12 @@ BookMaker.prototype.jumpToScene = function (sceneNumber, noScroll, handleFocus =
     }
   }
 
+  // Pause attentionSeekers
+  this.pauseAttentionSeekers(previousSceneIndex);
+
   // Attach elements for this scene
   this.attachElements(this.$current, sceneNumber);
+  this.runAttentionSeekers(sceneNumber);
 
   // Attach elements for next scene
   var $nextScene = this.$current.next();
@@ -1907,5 +2088,10 @@ BookMaker.prototype.resetAudios = function () {
     player.load();
   });
 };
+
+/** @constant {number}
+ * Marks attention seeker as done and will not rerun or readd
+ */
+BookMaker.ATTENTION_SEEKER_DONE = -1;
 
 export default BookMaker;

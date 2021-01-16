@@ -46,6 +46,11 @@
       "machineName": "H5P.AudioRecorderBookMaker",
       "majorVersion": 1,
       "minorVersion": 0
+    },
+    {
+      "machineName": "H5P.AttentionSeeker",
+      "majorVersion": 0,
+      "minorVersion": 1
     }
   ],
   "editorDependencies": [
