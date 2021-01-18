@@ -700,8 +700,9 @@ BookMaker.prototype.addAttentionSeeker = function (elementContainer, element) {
   };
 
   // Remove attention seeker once element is interacted with
-  elementContainer.addEventListener('click', unregisterWorker);
-  elementContainer.addEventListener('touchstart', unregisterWorker);
+  elementContainer.addEventListener('click', unregisterWorker, element.attentionSeeker.workerId);
+  elementContainer.addEventListener('mousedown', unregisterWorker, element.attentionSeeker.workerId);
+  elementContainer.addEventListener('touchstart', unregisterWorker, element.attentionSeeker.workerId);
 
   // Block attention seeker from working.
   this.attentionSeeker.on('removed', event => {
@@ -709,7 +710,8 @@ BookMaker.prototype.addAttentionSeeker = function (elementContainer, element) {
       element.attentionSeeker.workerId = BookMaker.ATTENTION_SEEKER_DONE;
 
       elementContainer.removeEventListener('click', unregisterWorker);
-      elementContainer.removeEventListener('touch', unregisterWorker);
+      elementContainer.removeEventListener('mousedown', unregisterWorker);
+      elementContainer.removeEventListener('touchstart', unregisterWorker);
     }
   });
 };
