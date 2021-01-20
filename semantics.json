@@ -155,6 +155,12 @@
                     "type": "group",
                     "label": "Attention seeker",
                     "importance": "low",
+                    "widget": "attentionseeker",
+                    "attentionseeker": {
+                      "style": "style",
+                      "interval": "interval",
+                      "repeat": "repeat"
+                    },
                     "optional": true,
                     "fields": [
                       {
@@ -475,6 +481,12 @@
         "label": "Attention seeker for dog ears",
         "importance": "low",
         "optional": true,
+        "widget": "attentionseeker",
+        "attentionseeker": {
+          "style": "style",
+          "interval": "interval",
+          "repeat": "repeat"
+        },
         "fields": [
           {
             "name": "style",

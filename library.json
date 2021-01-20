@@ -58,6 +58,11 @@
       "machineName": "H5PEditor.BookMaker",
       "majorVersion": 1,
       "minorVersion": 22
+    },
+    {
+      "machineName": "H5PEditor.AttentionSeeker",
+      "majorVersion": 0,
+      "minorVersion": 1
     }
   ]
 }
