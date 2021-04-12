@@ -136,7 +136,7 @@ let BookMaker = function (params, id, extras) {
   this.setElementsOverride(params.override);
 
   params.book.scenes.forEach(sceneParams => {
-    sceneParams.attentionSeeker = params.override.attentionSeekerCorner;
+    sceneParams.attentionSeeker = params.override && params.override.attentionSeekerCorner;
   });
 
   // Inheritance
