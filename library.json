@@ -2,7 +2,7 @@
   "title": "Book Maker",
   "contentType": "Library",
   "majorVersion": 1,
-  "minorVersion": 22,
+  "minorVersion": 23,
   "patchVersion": 0,
   "runnable": 1,
   "fullscreen": 1,
@@ -57,12 +57,12 @@
     {
       "machineName": "H5PEditor.BookMaker",
       "majorVersion": 1,
-      "minorVersion": 22
+      "minorVersion": 23
     },
     {
       "machineName": "H5PEditor.AttentionSeeker",
       "majorVersion": 0,
-      "minorVersion": 1
+      "minorVersion": 2
     }
   ]
 }

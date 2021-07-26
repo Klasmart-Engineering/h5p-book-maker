@@ -1,15 +1,15 @@
 {
   "name": "h5p-book-maker",
-  "version": "1.20.0",
-  "description": "A free HTML5- based presentation content type which allows users to add multiple choice, fill in the blanks, texts and other types of interactions to their presentations using only a web browser.",
+  "version": "1.22.0",
+  "description": "",
   "private": true,
   "scripts": {
-    "build": "cross-env NODE_ENV='production' webpack -p",
+    "build": "cross-env NODE_ENV='production' webpack",
     "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/h5p/h5p-book-maker.git"
+    "url": "git+https://bitbucket.org/calmisland/h5p-book-maker"
   },
   "keywords": [
     "h5p",
@@ -18,22 +18,23 @@
   "author": "Joubel",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.23.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-object-assign": "^6.22.0",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-latest": "^6.22.0",
-    "cross-env": "^5.2.1",
-    "css-loader": "^0.28.11",
-    "extract-text-webpack-plugin": "^2.1.2",
-    "file-loader": "^0.11.2",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-transform-object-assign": "^7.12.13",
+    "@babel/preset-env": "^7.14.4",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.0.0",
+    "eslint": "^7.18.0",
     "h5p-lib-controls": "0.0.13",
     "h5p-parent": "0.0.2",
-    "node-sass": "^4.14.1",
-    "resolve-url-loader": "^2.3.2",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.18.2",
-    "webpack": "^3.12.0"
+    "mini-css-extract-plugin": "^2.0.0",
+    "regenerator-runtime": "^0.13.7",
+    "resolve-url-loader": "^4.0.0",
+    "sass": "^1.36.0",
+    "sass-loader": "^12.0.0",
+    "webpack": "^5.15.0",
+    "webpack-cli": "^4.0.0"
   }
 }
