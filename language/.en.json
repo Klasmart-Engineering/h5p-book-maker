@@ -1,0 +1,282 @@
+{
+  "semantics": [
+    {
+      "fields": [
+        {
+          "field": {
+            "fields": [
+              {
+                "field": {
+                  "fields": [
+                    {
+                      "label": "Background Opacity"
+                    },
+                    {
+                      "description": "Set a custom image for the audio button (play).",
+                      "label": "Custom image (play)"
+                    },
+                    {
+                      "description": "Set a custom image for the audio button (pause). This will only have an effect if a custom image for \"play\" is set.",
+                      "label": "Custom image (pause)"
+                    },
+                    {
+                      "description": "Set a custom image for the audio button (play when paused). This will only have an effect if a custom image for \"play\" is set.",
+                      "label": "Custom image (play when paused)"
+                    },
+                    {
+                      "label": "Can be moved by user"
+                    },
+                    {
+                      "label": "Can be changed by user"
+                    },
+                    {
+                      "label": "Display as button"
+                    },
+                    {
+                      "label": "Title"
+                    },
+                    {
+                      "label": "Audio",
+                      "description": "Audio samples",
+                      "fields": [
+                        {
+                          "label": "Picked up",
+                          "description": "Audio to play when image is picked up."
+                        },
+                        {
+                          "label": "Dropped",
+                          "description": "Audio to play when image is dropped."
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Attention seeker",
+                      "fields": [
+                        {
+                          "label": "Style of the attention seeker",
+                          "description": "Set the visual style of the attention seeker.",
+                          "options": [
+                            {
+                              "label": "Bounce"
+                            },
+                            {
+                              "label": "Flash"
+                            },
+                            {
+                              "label": "Focus"
+                            },
+                            {
+                              "label": "Heart beat"
+                            },
+                            {
+                              "label": "Highlight"
+                            },
+                            {
+                              "label": "Pulse"
+                            },
+                            {
+                              "label": "Rubber band"
+                            },
+                            {
+                              "label": "Shake X"
+                            },
+                            {
+                              "label": "Tada"
+                            },
+                            {
+                              "label": "Wobble"
+                            }
+                          ]
+                        },
+                        {
+                          "label": "Time interval",
+                          "description": "Set how many seconds time interval between triggering the attention should be."
+                        },
+                        {
+                          "label": "Repeat",
+                          "description": "Set how often the attention seeker should trigger in the intervals. Keep empty for running infinitely"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "fields": [
+                  {
+                    "label": "Image",
+                    "description": "Image background should have a 2:1 width to height ratio to avoid stretching. High resolution images will display better on larger screens."
+                  },
+                  {
+                    "label": "Pick a color",
+                    "default": null
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "fields": [
+            {
+              "label": "Image",
+              "description": "Image background should have a 2:1 width to height ratio to avoid stretching. High resolution images will display better on larger screens."
+            },
+            {
+              "label": "Pick a color",
+              "default": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Localize",
+      "fields": [
+        {
+          "label": "Translation for \"Scene\"",
+          "default": "Scene"
+        },
+        {
+          "label": "Translation for \"Score\"",
+          "default": "Score"
+        },
+        {
+          "label": "Translation for \"Total\"",
+          "default": "Total"
+        },
+        {
+          "label": "Text for the retry button",
+          "default": "Retry"
+        },
+        {
+          "label": "Fullscreen label",
+          "default": "Fullscreen"
+        },
+        {
+          "label": "Exit fullscreen label",
+          "default": "Exit fullscreen"
+        },
+        {
+          "label": "Previous scene label",
+          "default": "Previous scene"
+        },
+        {
+          "label": "Next scene label",
+          "default": "Next scene"
+        },
+        {
+          "label": "Current scene label",
+          "default": "Current scene"
+        },
+        {
+          "label": "Last scene label",
+          "default": "Last scene"
+        },
+        {
+          "label": "Title for print button",
+          "default": "Print"
+        },
+        {
+          "label": "Print dialog ingress",
+          "default": "How would you like to print this presentation?"
+        },
+        {
+          "label": "Label for \"Print all scenes\" button",
+          "default": "Print all scenes"
+        },
+        {
+          "label": "Label for \"Print current scene\" button",
+          "default": "Print current scene"
+        },
+        {
+          "label": "Label for scenes without a title",
+          "default": "No title"
+        },
+        {
+          "label": "Explanation of scene navigation for assistive technologies",
+          "default": "Use left and right arrow to change scene in that direction whenever canvas is selected."
+        },
+        {
+          "label": "Canvas label for assistive technologies",
+          "default": "Presentation canvas. Use left and right arrow to move between scenes."
+        },
+        {
+          "label": "Label for scene counter. Variables are @index, @total",
+          "default": "Scene @index of @total"
+        }
+      ]
+    },
+    {
+      "label": "Behaviour settings.",
+      "description": "These options will let you override behaviour settings.",
+      "fields": [
+        {
+          "label": "Override \"Retry\" button",
+          "description": "This option determines if the \"Retry\" button will be configured for each question individually (default) shown for all questions (Enabled) or disabled for all questions (Disabled)",
+          "options": [
+            {
+              "label": "Enabled"
+            },
+            {
+              "label": "Disabled"
+            }
+          ]
+        },
+        {
+          "label": "Enable print button",
+          "description": "Enables the print button."
+        },
+        {
+          "label": "Attention seeker for dog ears",
+          "fields": [
+            {
+              "label": "Style of the attention seeker",
+              "description": "Set the visual style of the attention seeker.",
+              "options": [
+                {
+                  "label": "Bounce"
+                },
+                {
+                  "label": "Flash"
+                },
+                {
+                  "label": "Focus"
+                },
+                {
+                  "label": "Heart beat"
+                },
+                {
+                  "label": "Highlight"
+                },
+                {
+                  "label": "Pulse"
+                },
+                {
+                  "label": "Rubber band"
+                },
+                {
+                  "label": "Shake X"
+                },
+                {
+                  "label": "Tada"
+                },
+                {
+                  "label": "Wobble"
+                }
+              ]
+            },
+            {
+              "label": "Time interval",
+              "description": "Set how many seconds time interval between triggering the attention should be."
+            },
+            {
+              "label": "Repeat",
+              "description": "Set how often the attention seeker should trigger in the intervals. Keep empty for running infinitely."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
