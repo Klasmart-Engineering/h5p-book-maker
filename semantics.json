@@ -54,9 +54,9 @@
                     "type": "library",
                     "importance": "high",
                     "options": [
-                      "H5P.AdvancedText 1.1",
+                      "H5P.AdvancedText 1.2",
                       "H5P.Image 1.1",
-                      "H5P.Audio 1.4"
+                      "H5P.Audio 1.5"
                     ],
                     "optional": true
                   },
