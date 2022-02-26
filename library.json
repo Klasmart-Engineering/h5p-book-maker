@@ -2,7 +2,7 @@
   "title": "Book Maker",
   "contentType": "Library",
   "majorVersion": 1,
-  "minorVersion": 23,
+  "minorVersion": 24,
   "patchVersion": 0,
   "runnable": 1,
   "fullscreen": 1,
@@ -33,9 +33,14 @@
       "minorVersion": 5
     },
     {
+      "machineName": "FontKidsLoop",
+      "majorVersion": 1,
+      "minorVersion": 0
+    },
+    {
       "machineName": "H5P.JoubelUI",
       "majorVersion": 1,
-      "minorVersion": 3
+      "minorVersion": 4
     },
     {
       "machineName": "H5P.FontIcons",
@@ -57,7 +62,7 @@
     {
       "machineName": "H5PEditor.BookMaker",
       "majorVersion": 1,
-      "minorVersion": 23
+      "minorVersion": 24
     },
     {
       "machineName": "H5PEditor.AttentionSeeker",
