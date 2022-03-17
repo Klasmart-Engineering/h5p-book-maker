@@ -944,6 +944,9 @@ BookMaker.prototype.attachElement = function (element, instance, $scene, index) 
     }
   }
 
+  // KidsLoop workaround for KidsLoop app
+  this.kidsloopPreventDragging(instance);
+
   return $elementContainer;
 };
 
@@ -1544,6 +1547,11 @@ BookMaker.prototype.initTouchEvents = function () {
   var reset = transform('');
 
   this.$scenesWrapper.bind('touchstart', function (event) {
+    that.slideSliding = true;
+    if (that.blockSliding) {
+      return; // Workaround for KidsLoop app
+    }
+
     // Hide navigation bars when on touch
     if (!that.isEditor()) {
       that.navigationLeft.hide();
@@ -1620,11 +1628,15 @@ BookMaker.prototype.initTouchEvents = function () {
       // If we're not scrolling detemine if we're changing scene
       var moved = startX - lastX;
       if (moved > that.swipeThreshold && that.nextScene() || moved < -that.swipeThreshold && that.previousScene()) {
+        that.slideSliding = false;
         return;
       }
     }
     // Reset.
     that.$scenesWrapper.children().css(reset).removeClass('h5p-touch-move');
+
+    that.slideSliding = false;
+    that.blockSliding = false;
   });
 };
 
@@ -2090,6 +2102,54 @@ BookMaker.prototype.resetAudios = function () {
     player.load();
   });
 };
+
+/**
+ * Workaround for KidsLoop app. When dragging a text draggable, the
+ * screen slides as well and nobody seems to be able or willing to
+ * investigate why instead.
+ * @param {H5P.ContentType} instance Instance of H5P content.
+ */
+BookMaker.prototype.kidsloopPreventDragging = function (instance) {
+  const machineName = instance && instance.libraryInfo && instance.libraryInfo.machineName || null;
+
+  let draggablesToBlock = [];
+  if (machineName === 'H5P.Image') {
+    draggablesToBlock = [instance.$img.get(0)];
+  }
+
+  if (draggablesToBlock.length === 0) {
+    return;
+  }
+
+  this.kidsloopAddPreventDraggingListeners(draggablesToBlock);
+};
+
+/**
+ * Add listeners to block dragging on slides.
+ *
+ * For an unknown reason, on the node.js port of H5P, the touchstart event
+ * on subcontent's draggables also triggers the slide dragging of
+ * CoursePresentation.
+ * Workaround: use `blockSliding` (boolean) to register if a draggable is being
+ * dragged and prevent slide sliding in that case.
+ *
+ * @param {HTMLElement[]} draggablesToBlock Draggables to block sliding.
+ */
+BookMaker.prototype.kidsloopAddPreventDraggingListeners = function (draggablesToBlock) {
+  draggablesToBlock.forEach(draggable => {
+    draggable.addEventListener('touchstart', () => {
+      this.blockSliding = true;
+    });
+
+    draggable.addEventListener('touchend', () => {
+      if (!this.slideSliding) {
+        // Don't block sliding on regular H5P platforms if timing is off
+        this.blockSliding = false;
+      }
+    });
+  });
+};
+
 
 /** @constant {number}
  * Marks attention seeker as done and will not rerun or readd
