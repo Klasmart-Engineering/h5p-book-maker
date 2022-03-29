@@ -2090,16 +2090,31 @@ BookMaker.prototype.playAudio = function (audioElement) {
     return;
   }
 
-  audioElement.play();
+  audioElement.playPromise = audioElement.play();
 };
 
 /**
  * Reset audios.
  */
 BookMaker.prototype.resetAudios = function () {
-  this.players.forEach(player => {
+  const reset = (player) => {
     player.pause();
     player.load();
+    delete player.playPromise;
+  }
+
+  this.players.forEach(player => {
+    if (player.playPromise !== undefined) {
+      player.playPromise
+        .then(() => {
+          reset(player);
+        })
+        .catch(() => {
+          reset(player);
+        });
+    } else {
+      reset(player);
+    }
   });
 };
 
