@@ -1623,7 +1623,7 @@ BookMaker.prototype.initTouchEvents = function () {
     // TODO: Jumping over multiple scenes disabled until redesigned.
 
   }).bind('touchend', function () {
-    if (!scroll) {
+    if (!scroll && !that.blockSliding) {
 
       // If we're not scrolling detemine if we're changing scene
       var moved = startX - lastX;
