@@ -26,7 +26,10 @@ export default class NavigationBar {
     background.classList.add(`${this.params.prefix}-navigation-bar-background`);
     this.navigationBar.appendChild(background);
 
-    this.navigationBar.addEventListener('click', () => {
+    this.navigationBar.addEventListener('click', (event) => {
+      if (event.pointerType !== 'mouse') {
+        this.setTransparent(true);
+      }
       this.callbacks.onClick();
     });
 
@@ -50,5 +53,9 @@ export default class NavigationBar {
 
   hide() {
     this.navigationBar.classList.remove(`${this.params.prefix}-navigation-bar-visible`);
+  }
+
+  setTransparent(state) {
+    this.navigationBar.classList.toggle(`${this.params.prefix}-navigation-bar-transparent`, state)
   }
 }

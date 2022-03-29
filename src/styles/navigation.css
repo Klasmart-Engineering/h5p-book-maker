@@ -38,6 +38,6 @@
   background: linear-gradient(90deg, rgba(1, 1, 1, 0), rgba(1, 1, 1, 0.3));
 }
 
-.h5p-book-maker .h5p-book-maker-navigation-bar:hover .h5p-book-maker-navigation-bar-background {
+.h5p-book-maker .h5p-book-maker-navigation-bar:not(.h5p-book-maker-navigation-bar-transparent):hover .h5p-book-maker-navigation-bar-background {
   opacity: 1;
 }
