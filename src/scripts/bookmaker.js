@@ -1035,7 +1035,9 @@ BookMaker.prototype.addElementMoveListeners = function (dragItem, audios = {}) {
   // Handle element move
   const handleElementMove = (event) => {
     if (active) {
-      event.preventDefault();
+      if (event.cancelable !== false) {
+        event.preventDefault();
+      }
 
       // Get position
       if (event.type === 'touchmove') {
@@ -1602,7 +1604,9 @@ BookMaker.prototype.initTouchEvents = function () {
     }
 
     // Disable horizontal scrolling when changing scene
-    event.preventDefault();
+    if (event.cancelable !== false) {
+      event.preventDefault();
+    }
 
     // Create popup longer time than navigateTimer has passed
     if (!isTouchJump) {
